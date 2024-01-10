@@ -1,0 +1,3 @@
+require("alexcloudstar")
+print("hello")
+
