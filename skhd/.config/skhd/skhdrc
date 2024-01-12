@@ -8,6 +8,7 @@ alt - l : yabai -m window --focus east
 alt - s: yabai -m display --focus west
 alt - g: yabai -m display --focus east
 
+# alt is option key
 # rotate layout clockwise - [macOS] shift = option
 shift + alt - r : yabai -m space --rotate 270
 
