@@ -23,7 +23,7 @@ bindkey '^K' clear-screen-widget # For Ctrl+K
 bindkey '^k' clear-screen-widget # For Ctrl+k
 
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="robbyrussell"
 
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search)
