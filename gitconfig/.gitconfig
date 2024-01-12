@@ -3,3 +3,8 @@
 	email = alexcloudstar@gmail.com
 [push]
 	autoSetupRemote = true
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
