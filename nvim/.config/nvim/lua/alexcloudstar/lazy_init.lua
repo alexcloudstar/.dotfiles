@@ -1,36 +1,37 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-return require('packer').startup(function(use)
+require("lazy").setup({
     -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
-
-    use {
+    {'wbthomason/packer.nvim'},
+    {
         'nvim-telescope/telescope.nvim', tag = '0.1.5',
         -- or                            , branch = '0.1.x',
         requires = { {'nvim-lua/plenary.nvim'} }
-    }
-
-    use({
+    },
+    {
         'rose-pine/neovim',
         as = 'rose-pine',
         config = function()
             vim.cmd('colorscheme rose-pine')
         end
-    })
-
-
-    use({'nvim-treesitter/nvim-treesitter', run =  ":TSUpdate"})
-
-    use("theprimeagen/harpoon")
-
-    use("mbbill/undotree")
-
-    use("tpope/vim-fugitive")
-
-    use {
+    },
+    {'nvim-treesitter/nvim-treesitter', run =  ":TSUpdate"},
+    {"theprimeagen/harpoon"},
+    {"mbbill/undotree"},
+    {"tpope/vim-fugitive"},
+    {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v1.x',
         requires = {
@@ -51,9 +52,7 @@ return require('packer').startup(function(use)
             {'L3MON4D3/LuaSnip'},
             {'rafamadriz/friendly-snippets'},
         }
-    }
-    
-    use("github/copilot.vim")
+    },
+    {"github/copilot.vim"},
+})
 
-
-end)
