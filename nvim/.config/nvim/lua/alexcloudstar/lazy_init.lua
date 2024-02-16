@@ -21,10 +21,10 @@ require("lazy").setup({
         requires = { {'nvim-lua/plenary.nvim'} }
     },
     {
-        'rose-pine/neovim',
-        as = 'rose-pine',
+        'catppuccin/nvim',
+        as = 'catppuccin',
         config = function()
-            vim.cmd('colorscheme rose-pine')
+            vim.cmd('colorscheme catppuccin')
         end
     },
     {'nvim-treesitter/nvim-treesitter', run =  ":TSUpdate"},
