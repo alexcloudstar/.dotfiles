@@ -13,6 +13,8 @@ return {
         "j-hui/fidget.nvim",
     },
 
+    vim.keymap.set('n', '<space>vd', vim.diagnostic.open_float);
+
     config = function()
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
@@ -87,5 +89,27 @@ return {
                 prefix = "",
             },
         })
-    end
+    end;
+
+    vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = function(ev)
+            -- Enable completion triggered by <c-x><c-o>
+            vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+            -- Buffer local mappings.
+            -- See `:help vim.lsp.*` for documentation on any of the below functions
+            local opts = { buffer = ev.buf }
+            vim.keymap.set("n", "gd", vim.lsp.buf.definition , opts)
+            vim.keymap.set("n", "K",  vim.lsp.buf.hover , opts)
+            vim.keymap.set("n", "<leader>vws",  vim.lsp.buf.workspace_symbol , opts)
+            vim.keymap.set("n", "<leader>vd",  vim.diagnostic.open_float , opts)
+            vim.keymap.set("n", "[d",  vim.diagnostic.goto_next , opts)
+            vim.keymap.set("n", "]d",  vim.diagnostic.goto_prev , opts)
+            vim.keymap.set("n", "<leader>vca",  vim.lsp.buf.code_action , opts)
+            vim.keymap.set("n", "<leader>vrr",  vim.lsp.buf.references , opts)
+            vim.keymap.set("n", "<leader>vrn",  vim.lsp.buf.rename , opts)
+            vim.keymap.set("i", "<C-h>",  vim.lsp.buf.signature_help , opts)
+        end,
+    })
 }
