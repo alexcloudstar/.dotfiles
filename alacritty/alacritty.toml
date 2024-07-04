@@ -21,3 +21,14 @@ option_as_alt = "Both"
 normal.family = "MesloLGS Nerd Font Mono"
 
 size = 16
+
+
+[[keyboard.bindings]]
+key = "N"
+mods = "Command"
+action = "None"
+
+[[keyboard.bindings]]
+key = "T"
+mods = "Command"
+action = "None"
