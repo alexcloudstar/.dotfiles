@@ -34,6 +34,7 @@ return {
                 "html",
                 "tailwindcss",
                 "gopls",
+                "clangd",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -54,6 +55,23 @@ return {
                                 }
                             }
                         }
+                    }
+                end,
+
+                ["clangd"] = function()
+                    require("lspconfig").clangd.setup {
+                        capabilities = capabilities,
+                        cmd = { "clangd" }, -- Ensure clangd is in PATH
+                        filetypes = { "c", "cpp", "objc", "objcpp" },
+                        root_dir = require("lspconfig.util").root_pattern(
+                            "compile_commands.json",
+                            ".git"
+                        ) or vim.fn.getcwd(),
+                        settings = {
+                            clangd = {
+                                fallbackFlags = { "-std=c++20" }, -- Customize flags if needed
+                            },
+                        },
                     }
                 end,
             }
