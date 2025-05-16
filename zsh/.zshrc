@@ -92,7 +92,7 @@ compinit
 # End of Docker CLI completions
 
 # pnpm
-export PNPM_HOME="/Users/stefanalexandruromila/Library/pnpm:$PATH"
+export PNPM_HOME="/Users/stefanalexandruromila/Library/pnpm:/usr/local/opt/llvm/bin:/usr/local/opt/postgresql@16/bin:/Users/stefanalexandruromila/.local/bin:/Users/stefanalexandruromila/.bun/bin:/Users/stefanalexandruromila/.yarn/bin:/Users/stefanalexandruromila/.config/yarn/global/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/Users/stefanalexandruromila/.nvm/versions/node/v22.5.1/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Library/Frameworks/Python.framework/Versions/3.12/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/usr/local/go/bin:/Users/stefanalexandruromila/.cargo/bin:/Applications/Ghostty.app/Contents/MacOS:/usr/local/opt/fzf/bin"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
