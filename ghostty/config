@@ -1,7 +1,7 @@
-theme = github-dark-dimmed
+theme = Catppuccin Mocha
 font-family = "MesloLGS Nerd Font Mono"
 font-size = 16
-background-opacity = 0.8
+background-opacity = 0.9
 background-blur-radius = 20
 macos-titlebar-style = hidden
 window-padding-x = 10
