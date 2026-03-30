@@ -16,12 +16,6 @@ My personal dotfiles for macOS Linux setups. This repo contains my terminal tool
 - **Neovim**
   Full setup inside `nvim/.config/nvim` including plugins and package configuration.
 
-- **SKHD**
-  Hotkeys for window management and command shortcuts.
-
-- **Yabai**
-  Tiling window manager config.
-
 - **Zsh**
   Zsh config and utilities under `zsh/`.
 
@@ -63,9 +57,7 @@ If you are using macOS, make sure you have these tools installed:
 ├── gitconfig
 ├── local/.local/bin
 ├── nvim/.config/nvim
-├── skhd
 ├── tmux
-├── yabai
 └── zsh
 ```
 
