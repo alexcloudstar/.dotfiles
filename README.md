@@ -63,9 +63,9 @@ If you are using macOS, make sure you have these tools installed:
 ├── gitconfig
 ├── local/.local/bin
 ├── nvim/.config/nvim
-├── skhd/.config/skhd
+├── skhd
 ├── tmux
-├── yabai/.config/yabai
+├── yabai
 └── zsh
 ```
 
