@@ -22,6 +22,7 @@
     - { src: "tmux/.tmux.conf", dest: ".tmux.conf" }
     - { src: "zsh/.zshrc", dest: ".zshrc" }
     - { src: "zsh/.fzf.zsh", dest: ".fzf.zsh" }
+    - { src: "zsh/.p10k.zsh", dest: ".p10k.zsh" }
 
 - name: Symlink ~/.config apps
   ansible.builtin.file:
