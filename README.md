@@ -52,8 +52,8 @@ ansible-playbook site.yml --tags stow
 ```
 .dotfiles
 ├── ansible/            # provisioning playbook
-├── alacritty/.config/alacritty
-├── ghostty/.config/ghostty
+├── alacritty
+├── ghostty
 ├── gitconfig
 ├── local/.local/bin
 ├── nvim/.config/nvim
