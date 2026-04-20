@@ -1,0 +1,22 @@
+---
+- name: Ensure Claude Code directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ ansible_env.HOME }}/.claude"
+    - "{{ ansible_env.HOME }}/.claude/plugins"
+    - "{{ ansible_env.HOME }}/.agents"
+
+- name: Symlink Claude Code config files
+  ansible.builtin.file:
+    src: "{{ dotfiles_dir }}/claude/{{ item.src }}"
+    dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
+    state: link
+    force: true
+  loop:
+    - { src: "CLAUDE.md", dest: ".claude/CLAUDE.md" }
+    - { src: "settings.json", dest: ".claude/settings.json" }
+    - { src: "plugins/installed_plugins.json", dest: ".claude/plugins/installed_plugins.json" }
+    - { src: "skills", dest: ".agents/skills" }

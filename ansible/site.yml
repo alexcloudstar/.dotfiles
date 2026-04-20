@@ -20,3 +20,5 @@
       tags: [languages]
     - role: symlinks
       tags: [symlinks]
+    - role: claude
+      tags: [claude]
