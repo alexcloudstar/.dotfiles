@@ -19,4 +19,5 @@
     - { src: "CLAUDE.md", dest: ".claude/CLAUDE.md" }
     - { src: "settings.json", dest: ".claude/settings.json" }
     - { src: "plugins/installed_plugins.json", dest: ".claude/plugins/installed_plugins.json" }
+    - { src: "skills", dest: ".claude/skills" }
     - { src: "skills", dest: ".agents/skills" }
