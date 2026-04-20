@@ -1,0 +1,22 @@
+---
+- name: Bootstrap macOS workstation
+  hosts: localhost
+  gather_facts: true
+  vars:
+    dotfiles_dir: "{{ playbook_dir }}/.."
+  pre_tasks:
+    - name: Fail if not macOS
+      ansible.builtin.fail:
+        msg: "This playbook only supports macOS."
+      when: ansible_facts['os_family'] != 'Darwin'
+  roles:
+    - role: homebrew
+      tags: [homebrew]
+    - role: packages
+      tags: [packages]
+    - role: shell
+      tags: [shell]
+    - role: stow
+      tags: [stow]
+    - role: macos
+      tags: [macos]

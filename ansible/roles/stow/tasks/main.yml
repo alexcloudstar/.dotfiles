@@ -1,0 +1,39 @@
+---
+- name: Ensure ~/.config exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config"
+    state: directory
+    mode: "0755"
+
+- name: Ensure ~/.local/bin exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+    state: directory
+    mode: "0755"
+
+- name: Remove conflicting default files that block stow
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/{{ item }}"
+    state: absent
+  loop:
+    - .zshrc
+    - .tmux.conf
+    - .gitconfig
+  when: dotfiles_force | default(false) | bool
+
+- name: Stow dotfile packages
+  ansible.builtin.command:
+    cmd: "stow --target={{ ansible_env.HOME }} --restow {{ item }}"
+    chdir: "{{ dotfiles_dir }}"
+  loop:
+    - alacritty
+    - ghostty
+    - gitconfig
+    - local
+    - nvim
+    - skhd
+    - tmux
+    - yabai
+    - zsh
+  register: stow_result
+  changed_when: stow_result.stdout != "" or stow_result.stderr != ""

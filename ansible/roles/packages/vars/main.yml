@@ -1,0 +1,33 @@
+---
+homebrew_taps:
+  - koekeishiya/formulae
+
+homebrew_formulae:
+  - git
+  - gh
+  - stow
+  - neovim
+  - tmux
+  - zsh
+  - ripgrep
+  - fd
+  - fzf
+  - bat
+  - eza
+  - jq
+  - lazygit
+  - node
+  - nvm
+  - pyenv
+  - pnpm
+  - oven-sh/bun/bun
+  - postgresql@16
+  - llvm
+  - koekeishiya/formulae/yabai
+  - koekeishiya/formulae/skhd
+
+homebrew_casks:
+  - alacritty
+  - ghostty
+  - visual-studio-code
+  - docker

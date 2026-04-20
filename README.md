@@ -25,39 +25,41 @@ My personal dotfiles for macOS Linux setups. This repo contains my terminal tool
 - **Local scripts**
   Utilities in `local/.local/bin`.
 
-## Installation
+## Installation (macOS)
 
-Clone the repo into your home directory:
+One-shot provisioning via Ansible:
 
 ```
 git clone https://github.com/alexcloudstar/.dotfiles ~/.dotfiles
-```
-
-Then run the setup script (if available) or manually symlink the configs:
-
-```
 cd ~/.dotfiles
-# Example:
-ln -s ~/.dotfiles/zsh/.zshrc ~/.zshrc
-ln -s ~/.dotfiles/nvim/.config/nvim ~/.config/nvim
+./bootstrap.sh
 ```
 
-If you are using macOS, make sure you have these tools installed:
+`bootstrap.sh` installs Xcode CLT, Homebrew, and Ansible, then runs
+`ansible/site.yml` to install packages, set up oh-my-zsh, stow every
+config package, and apply a few macOS defaults.
 
-- Homebrew
-- Git
-- Neovim or your preferred terminal/editor
+Re-run any time to reconverge. To run a subset:
+
+```
+cd ansible
+ansible-playbook site.yml --tags packages
+ansible-playbook site.yml --tags stow
+```
 
 ## Folder structure
 
 ```
 .dotfiles
-├── alacritty
-├── ghostty
+├── ansible/            # provisioning playbook
+├── alacritty/.config/alacritty
+├── ghostty/.config/ghostty
 ├── gitconfig
 ├── local/.local/bin
 ├── nvim/.config/nvim
+├── skhd/.config/skhd
 ├── tmux
+├── yabai/.config/yabai
 └── zsh
 ```
 

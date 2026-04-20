@@ -1,0 +1,37 @@
+---
+- name: Check for oh-my-zsh
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.oh-my-zsh"
+  register: omz_stat
+
+- name: Install oh-my-zsh
+  ansible.builtin.shell: |
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  when: not omz_stat.stat.exists
+
+- name: Install zsh-autosuggestions
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+    depth: 1
+    update: false
+
+- name: Install zsh-syntax-highlighting
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting
+    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+    depth: 1
+    update: false
+
+- name: Ensure Homebrew zsh is a valid login shell
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: "{{ brew_bin | dirname }}/zsh"
+    state: present
+  become: true
+
+- name: Set default shell to Homebrew zsh
+  ansible.builtin.user:
+    name: "{{ ansible_env.USER }}"
+    shell: "{{ brew_bin | dirname }}/zsh"
+  become: true
