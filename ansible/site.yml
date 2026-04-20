@@ -16,7 +16,7 @@
       tags: [packages]
     - role: shell
       tags: [shell]
-    - role: stow
-      tags: [stow]
+    - role: symlinks
+      tags: [symlinks]
     - role: macos
       tags: [macos]

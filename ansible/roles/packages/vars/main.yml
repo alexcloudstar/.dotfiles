@@ -1,33 +1,36 @@
 ---
 homebrew_taps:
   - koekeishiya/formulae
+  - stripe/stripe-cli
 
 homebrew_formulae:
-  - git
-  - gh
-  - stow
-  - neovim
-  - tmux
-  - zsh
-  - ripgrep
-  - fd
-  - fzf
-  - bat
+  - cmake
+  - cmake-docs
+  - colima
   - eza
-  - jq
-  - lazygit
-  - node
-  - nvm
-  - pyenv
-  - pnpm
-  - oven-sh/bun/bun
-  - postgresql@16
+  - fd
+  - ffmpeg
+  - fzf
+  - gdb
+  - gh
+  - go
   - llvm
-  - koekeishiya/formulae/yabai
+  - neovim
+  - pipx
+  - powerlevel10k
+  - pyenv
+  - reattach-to-user-namespace
+  - ripgrep
+  - stow
+  - tmux
+  - tree
+  - vim
+  - wget
+  - whisper-cpp
   - koekeishiya/formulae/skhd
+  - koekeishiya/formulae/yabai
+  - stripe/stripe-cli/stripe
 
 homebrew_casks:
-  - alacritty
+  - font-meslo-lg-nerd-font
   - ghostty
-  - visual-studio-code
-  - docker

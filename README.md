@@ -4,12 +4,6 @@ My personal dotfiles for macOS Linux setups. This repo contains my terminal tool
 
 ## Included configs
 
-- **Alacritty**
-  Custom Alacritty configuration and themes.
-
-- **Ghostty**
-  Tweaked Ghostty configuration for performance and visuals.
-
 - **Git**
   `.gitconfig` and helper scripts.
 
@@ -36,8 +30,8 @@ cd ~/.dotfiles
 ```
 
 `bootstrap.sh` installs Xcode CLT, Homebrew, and Ansible, then runs
-`ansible/site.yml` to install packages, set up oh-my-zsh, stow every
-config package, and apply a few macOS defaults.
+`ansible/site.yml` to install packages, set up oh-my-zsh, symlink
+every config into place, and apply a few macOS defaults.
 
 Re-run any time to reconverge. To run a subset:
 
@@ -51,15 +45,13 @@ ansible-playbook site.yml --tags stow
 
 ```
 .dotfiles
-├── ansible/            # provisioning playbook
-├── alacritty
-├── ghostty
+├── ansible/    # provisioning playbook
 ├── gitconfig
-├── local/.local/bin
-├── nvim/.config/nvim
-├── skhd/.config/skhd
+├── local       # scripts symlinked to ~/.local/bin
+├── nvim        # symlinked to ~/.config/nvim
+├── skhd        # symlinked to ~/.config/skhd
 ├── tmux
-├── yabai/.config/yabai
+├── yabai       # symlinked to ~/.config/yabai
 └── zsh
 ```
 

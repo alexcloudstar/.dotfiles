@@ -1,0 +1,45 @@
+---
+- name: Ensure ~/.config exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config"
+    state: directory
+    mode: "0755"
+
+- name: Ensure ~/.local/bin exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+    state: directory
+    mode: "0755"
+
+- name: Symlink home-level dotfiles
+  ansible.builtin.file:
+    src: "{{ dotfiles_dir }}/{{ item.src }}"
+    dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
+    state: link
+    force: true
+  loop:
+    - { src: "gitconfig/.gitconfig", dest: ".gitconfig" }
+    - { src: "tmux/.tmux.conf", dest: ".tmux.conf" }
+    - { src: "zsh/.zshrc", dest: ".zshrc" }
+    - { src: "zsh/.fzf.zsh", dest: ".fzf.zsh" }
+
+- name: Symlink ~/.config apps
+  ansible.builtin.file:
+    src: "{{ dotfiles_dir }}/{{ item }}"
+    dest: "{{ ansible_env.HOME }}/.config/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - nvim
+    - skhd
+    - yabai
+
+- name: Symlink scripts into ~/.local/bin
+  ansible.builtin.file:
+    src: "{{ dotfiles_dir }}/local/{{ item }}"
+    dest: "{{ ansible_env.HOME }}/.local/bin/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - cht.sh
+    - tmux-sessionizer
