@@ -11,10 +11,16 @@ My personal dotfiles for macOS Linux setups. This repo contains my terminal tool
   Full setup inside `nvim/.config/nvim` including plugins and package configuration.
 
 - **Zsh**
-  Zsh config and utilities under `zsh/`.
+  Zsh config and utilities under `zsh/`, including Powerlevel10k (`.p10k.zsh`).
 
 - **tmux**
   Custom `.tmux.conf` tweaks, window naming, and scripts.
+
+- **Alacritty**
+  Terminal emulator config under `alacritty/`.
+
+- **Claude Code**
+  Private config managed as a git submodule (`claude/`). Symlinks `CLAUDE.md`, `settings.json`, `plugins/installed_plugins.json`, and `skills/` into `~/.claude/`.
 
 - **Local scripts**
   Utilities in `local/.local/bin`.
@@ -45,7 +51,9 @@ ansible-playbook site.yml --tags stow
 
 ```
 .dotfiles
+├── alacritty   # symlinked to ~/.config/alacritty
 ├── ansible/    # provisioning playbook
+├── claude/     # submodule — private Claude Code config
 ├── gitconfig
 ├── local       # scripts symlinked to ~/.local/bin
 ├── nvim        # symlinked to ~/.config/nvim
