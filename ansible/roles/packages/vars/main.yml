@@ -33,4 +33,3 @@ homebrew_formulae:
 
 homebrew_casks:
   - font-meslo-lg-nerd-font
-  - ghostty

@@ -16,9 +16,6 @@ My personal dotfiles for macOS Linux setups. This repo contains my terminal tool
 - **tmux**
   Custom `.tmux.conf` tweaks, window naming, and scripts.
 
-- **Alacritty**
-  Terminal emulator config under `alacritty/`.
-
 - **Claude Code**
   Private config managed as a git submodule (`claude/`). Symlinks `CLAUDE.md`, `settings.json`, `plugins/installed_plugins.json`, and `skills/` into `~/.claude/`.
 
@@ -51,7 +48,6 @@ ansible-playbook site.yml --tags stow
 
 ```
 .dotfiles
-├── alacritty   # symlinked to ~/.config/alacritty
 ├── ansible/    # provisioning playbook
 ├── claude/     # submodule — private Claude Code config
 ├── gitconfig
