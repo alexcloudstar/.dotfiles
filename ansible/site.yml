@@ -16,6 +16,8 @@
       tags: [packages]
     - role: shell
       tags: [shell]
+    - role: languages
+      tags: [languages]
     - role: symlinks
       tags: [symlinks]
     - role: macos

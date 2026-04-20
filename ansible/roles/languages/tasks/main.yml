@@ -1,0 +1,81 @@
+---
+# ---------- nvm + node ----------
+- name: Check for nvm
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+  register: nvm_stat
+
+- name: Install nvm
+  ansible.builtin.shell: |
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh | bash
+  args:
+    executable: /bin/bash
+  when: not nvm_stat.stat.exists
+
+- name: Install node ({{ node_version }}) via nvm
+  ansible.builtin.shell: |
+    export NVM_DIR="$HOME/.nvm"
+    . "$NVM_DIR/nvm.sh"
+    nvm install {{ node_version }}
+    nvm alias default {{ node_version }}
+  args:
+    executable: /bin/bash
+  register: nvm_install
+  changed_when: "'is already installed' not in nvm_install.stdout"
+
+- name: Install global npm packages
+  ansible.builtin.shell: |
+    export NVM_DIR="$HOME/.nvm"
+    . "$NVM_DIR/nvm.sh"
+    nvm use default >/dev/null
+    npm install -g {{ item }}
+  args:
+    executable: /bin/bash
+  loop: "{{ npm_global_packages }}"
+  register: npm_install
+  changed_when: "'added' in npm_install.stdout or 'changed' in npm_install.stdout"
+
+# ---------- bun ----------
+- name: Check for bun
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.bun/bin/bun"
+  register: bun_stat
+
+- name: Install bun
+  ansible.builtin.shell: |
+    curl -fsSL https://bun.sh/install | bash
+  args:
+    executable: /bin/bash
+  when: not bun_stat.stat.exists
+
+# ---------- rustup ----------
+- name: Check for rustup
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
+  register: rustup_stat
+
+- name: Install rustup
+  ansible.builtin.shell: |
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain {{ rustup_toolchain }}
+  args:
+    executable: /bin/bash
+  when: not rustup_stat.stat.exists
+
+- name: Ensure rust toolchain is up to date
+  ansible.builtin.command: "{{ ansible_env.HOME }}/.cargo/bin/rustup update {{ rustup_toolchain }}"
+  register: rustup_update
+  changed_when: "'unchanged' not in rustup_update.stdout"
+
+# ---------- pyenv python ----------
+- name: Check installed pyenv versions
+  ansible.builtin.command: "{{ brew_bin | dirname }}/pyenv versions --bare"
+  register: pyenv_versions
+  changed_when: false
+
+- name: Install Python {{ python_version }} via pyenv
+  ansible.builtin.command: "{{ brew_bin | dirname }}/pyenv install {{ python_version }}"
+  when: python_version not in pyenv_versions.stdout_lines
+
+- name: Set global Python version
+  ansible.builtin.command: "{{ brew_bin | dirname }}/pyenv global {{ python_version }}"
+  changed_when: false
