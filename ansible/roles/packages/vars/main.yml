@@ -6,6 +6,8 @@ homebrew_taps:
 homebrew_formulae:
   - cmake
   - cmake-docs
+  - lua
+  - zsh
   - colima
   - eza
   - fd
