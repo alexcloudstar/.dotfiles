@@ -20,5 +20,3 @@
       tags: [languages]
     - role: symlinks
       tags: [symlinks]
-    - role: macos
-      tags: [macos]
