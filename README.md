@@ -1,86 +1,91 @@
-# .dotfiles
+<div align="center">
 
-My personal dotfiles for macOS. This repo contains my terminal tools, editor configuration, and various environment automations that I use across my machines.
+#  .dotfiles
 
-## Included configs
+**My personal macOS environment as code.**
+Terminal, editor, window manager, and shell — provisioned in one shot.
 
-- **Git**
-  `.gitconfig` and helper scripts.
+[![macOS](https://img.shields.io/badge/macOS-Apple_Silicon-000000?style=flat-square&logo=apple&logoColor=white)](https://www.apple.com/macos/)
+[![Shell](https://img.shields.io/badge/shell-zsh-89e051?style=flat-square&logo=gnubash&logoColor=white)](https://www.zsh.org/)
+[![Editor](https://img.shields.io/badge/editor-neovim-57A143?style=flat-square&logo=neovim&logoColor=white)](https://neovim.io/)
+[![Provisioner](https://img.shields.io/badge/provisioner-ansible-EE0000?style=flat-square&logo=ansible&logoColor=white)](https://www.ansible.com/)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](#license)
 
-- **Neovim**
-  Full setup inside `nvim/.config/nvim` including plugins and package configuration.
+</div>
 
-- **Zsh**
-  Zsh config and utilities under `zsh/`, including Powerlevel10k (`.p10k.zsh`).
+---
 
-- **tmux**
-  Custom `.tmux.conf` tweaks, window naming, and scripts.
+## Quick start
 
-- **yabai**
-  Tiling window manager config under `yabai/`, symlinked to `~/.config/yabai`.
-
-- **skhd**
-  Hotkey daemon config under `skhd/`, symlinked to `~/.config/skhd`.
-
-- **Claude Code**
-  Private config managed as a git submodule (`claude/`). Symlinks `CLAUDE.md`, `settings.json`, `plugins/installed_plugins.json`, and `skills/` into `~/.claude/`.
-
-- **Local scripts**
-  Utilities in `local/.local/bin`.
-
-## Installation
-
-One-shot provisioning via Ansible:
-
-```
+```zsh
 git clone https://github.com/alexcloudstar/.dotfiles ~/.dotfiles
 cd ~/.dotfiles
 ./bootstrap.sh
 ```
 
-`bootstrap.sh` installs Xcode CLT, Homebrew, and Ansible, then runs
-`ansible/site.yml` to install packages, set up oh-my-zsh, symlink
-every config into place, and apply a few macOS defaults.
+That's it. Grab a coffee — first run takes ~15 minutes.
 
-Apple Silicon is assumed (Homebrew at `/opt/homebrew`). Intel Macs will need
-manual path adjustments in `zsh/.zshrc` and `zsh/.fzf.zsh`.
+> [!NOTE]
+> Apple Silicon assumed (Homebrew at `/opt/homebrew`). Intel Macs need manual path tweaks in `zsh/.zshrc` and `zsh/.fzf.zsh`.
 
-Re-run any time to reconverge. To run a subset:
+## What's inside
 
-```
+| Tool                                   | Purpose                                | Path                            |
+| -------------------------------------- | -------------------------------------- | ------------------------------- |
+| [**Neovim**](https://neovim.io)        | Editor — full Lua config + plugins     | `nvim/` → `~/.config/nvim`      |
+| [**Zsh**](https://www.zsh.org)         | Shell — oh-my-zsh + Powerlevel10k      | `zsh/`                          |
+| [**tmux**](https://github.com/tmux)    | Terminal multiplexer                   | `tmux/`                         |
+| [**yabai**](https://github.com/koekeishiya/yabai) | Tiling window manager       | `yabai/` → `~/.config/yabai`    |
+| [**skhd**](https://github.com/koekeishiya/skhd)   | Hotkey daemon for yabai     | `skhd/` → `~/.config/skhd`      |
+| **Git**                                | `.gitconfig` + helper scripts          | `gitconfig`                     |
+| **Claude Code**                        | Private config (git submodule)         | `claude/` → `~/.claude/`        |
+| **Local scripts**                      | Personal utilities                     | `local/` → `~/.local/bin`       |
+
+## Provisioning
+
+`bootstrap.sh` installs Xcode CLT, Homebrew, and Ansible, then runs `ansible/site.yml` to:
+
+- Install Brewfile packages
+- Set up oh-my-zsh
+- Symlink every config into place via `stow`
+- Apply a handful of macOS defaults
+
+Re-run any time to reconverge.
+
+<details>
+<summary><strong>Run a subset</strong></summary>
+
+```zsh
 cd ansible
 ansible-playbook site.yml --tags packages
 ansible-playbook site.yml --tags stow
 ```
+
+</details>
 
 ## Folder structure
 
 ```
 .dotfiles
 ├── ansible/    # provisioning playbook
-├── claude/     # submodule — private Claude Code config
+├── claude/     # submodule: private Claude Code config
 ├── gitconfig
-├── local       # scripts symlinked to ~/.local/bin
-├── nvim        # symlinked to ~/.config/nvim
-├── skhd        # symlinked to ~/.config/skhd
-├── tmux
-├── yabai       # symlinked to ~/.config/yabai
-└── zsh
+├── local/      # scripts → ~/.local/bin
+├── nvim/       # → ~/.config/nvim
+├── skhd/       # → ~/.config/skhd
+├── tmux/
+├── yabai/      # → ~/.config/yabai
+└── zsh/
 ```
 
-## Customization
+## Customize
 
-Feel free to fork and tweak the configs:
-
-- Change themes
-- Add/remove plugins
-- Modify shortcuts
-- Add new scripts in `local/.local/bin`
+Fork it. Swap themes, plugins, shortcuts. Drop new scripts in `local/.local/bin`.
 
 ## Contributing
 
-Suggestions and improvements are welcome. Open an issue or PR.
+Issues and PRs welcome.
 
 ## License
 
-MIT License.
+[MIT](LICENSE)
