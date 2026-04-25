@@ -3,7 +3,7 @@
 #  .dotfiles
 
 **My personal macOS environment as code.**
-Terminal, editor, window manager, and shell — provisioned in one shot.
+Terminal, editor, window manager, and shell, provisioned in one shot.
 
 [![macOS](https://img.shields.io/badge/macOS-Apple_Silicon-000000?style=flat-square&logo=apple&logoColor=white)](https://www.apple.com/macos/)
 [![Shell](https://img.shields.io/badge/shell-zsh-89e051?style=flat-square&logo=gnubash&logoColor=white)](https://www.zsh.org/)
@@ -23,7 +23,7 @@ cd ~/.dotfiles
 ./bootstrap.sh
 ```
 
-That's it. Grab a coffee — first run takes ~15 minutes.
+That's it. Grab a coffee, first run takes about 15 minutes.
 
 > [!NOTE]
 > Apple Silicon assumed (Homebrew at `/opt/homebrew`). Intel Macs need manual path tweaks in `zsh/.zshrc` and `zsh/.fzf.zsh`.
@@ -32,8 +32,8 @@ That's it. Grab a coffee — first run takes ~15 minutes.
 
 | Tool                                   | Purpose                                | Path                            |
 | -------------------------------------- | -------------------------------------- | ------------------------------- |
-| [**Neovim**](https://neovim.io)        | Editor — full Lua config + plugins     | `nvim/` → `~/.config/nvim`      |
-| [**Zsh**](https://www.zsh.org)         | Shell — oh-my-zsh + Powerlevel10k      | `zsh/`                          |
+| [**Neovim**](https://neovim.io)        | Editor with full Lua config + plugins  | `nvim/` → `~/.config/nvim`      |
+| [**Zsh**](https://www.zsh.org)         | Shell with oh-my-zsh + Powerlevel10k   | `zsh/`                          |
 | [**tmux**](https://github.com/tmux)    | Terminal multiplexer                   | `tmux/`                         |
 | [**yabai**](https://github.com/koekeishiya/yabai) | Tiling window manager       | `yabai/` → `~/.config/yabai`    |
 | [**skhd**](https://github.com/koekeishiya/skhd)   | Hotkey daemon for yabai     | `skhd/` → `~/.config/skhd`      |
