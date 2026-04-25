@@ -1,6 +1,6 @@
 # .dotfiles
 
-My personal dotfiles for macOS Linux setups. This repo contains my terminal tools, editor configuration, and various environment automations that I use across my machines.
+My personal dotfiles for macOS. This repo contains my terminal tools, editor configuration, and various environment automations that I use across my machines.
 
 ## Included configs
 
@@ -16,13 +16,19 @@ My personal dotfiles for macOS Linux setups. This repo contains my terminal tool
 - **tmux**
   Custom `.tmux.conf` tweaks, window naming, and scripts.
 
+- **yabai**
+  Tiling window manager config under `yabai/`, symlinked to `~/.config/yabai`.
+
+- **skhd**
+  Hotkey daemon config under `skhd/`, symlinked to `~/.config/skhd`.
+
 - **Claude Code**
   Private config managed as a git submodule (`claude/`). Symlinks `CLAUDE.md`, `settings.json`, `plugins/installed_plugins.json`, and `skills/` into `~/.claude/`.
 
 - **Local scripts**
   Utilities in `local/.local/bin`.
 
-## Installation (macOS)
+## Installation
 
 One-shot provisioning via Ansible:
 
@@ -35,6 +41,9 @@ cd ~/.dotfiles
 `bootstrap.sh` installs Xcode CLT, Homebrew, and Ansible, then runs
 `ansible/site.yml` to install packages, set up oh-my-zsh, symlink
 every config into place, and apply a few macOS defaults.
+
+Apple Silicon is assumed (Homebrew at `/opt/homebrew`). Intel Macs will need
+manual path adjustments in `zsh/.zshrc` and `zsh/.fzf.zsh`.
 
 Re-run any time to reconverge. To run a subset:
 
