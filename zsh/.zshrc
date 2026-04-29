@@ -36,7 +36,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
-alias python=/usr/bin/python3
+alias python=python3
 
 # bun completions
 [ -s "/Users/stefanalexandruromila/.bun/_bun" ] && source "/Users/stefanalexandruromila/.bun/_bun"
@@ -86,11 +86,8 @@ export PNPM_HOME="$HOME/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
 
 # Docker
 export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
 
+export PATH="/opt/homebrew/opt/python@3.14/bin:$PATH"
