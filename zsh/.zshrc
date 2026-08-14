@@ -91,3 +91,6 @@ export PATH="$PNPM_HOME:$PATH"
 export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
 
 export PATH="/opt/homebrew/opt/python@3.14/bin:$PATH"
+
+# Added by Antigravity IDE
+export PATH="/Users/stefanalexandruromila/.antigravity-ide/antigravity-ide/bin:$PATH"
