@@ -23,7 +23,6 @@ homebrew_formulae:
   - pyenv
   - reattach-to-user-namespace
   - ripgrep
-  - stow
   - tmux
   - tree
   - vim

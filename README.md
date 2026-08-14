@@ -43,12 +43,16 @@ That's it. Grab a coffee, first run takes about 15 minutes.
 
 ## Provisioning
 
-`bootstrap.sh` installs Xcode CLT, Homebrew, and Ansible, then runs `ansible/site.yml` to:
+`bootstrap.sh` installs Xcode CLT, Homebrew, and Ansible, then runs `ansible/site.yml`, which applies six roles in order:
 
-- Install Brewfile packages
-- Set up oh-my-zsh
-- Symlink every config into place via `stow`
-- Apply a handful of macOS defaults
+| Role | Tag | Does |
+| --- | --- | --- |
+| `homebrew` | `homebrew` | Installs Homebrew itself if missing, updates it |
+| `packages` | `packages` | Taps and installs formulae/casks from `ansible/roles/packages/vars/main.yml` |
+| `shell` | `shell` | Installs oh-my-zsh + plugins, sets Homebrew zsh as the login shell |
+| `languages` | `languages` | Installs nvm/node, bun, rustup, and pyenv + the pinned Python version |
+| `symlinks` | `symlinks` | Symlinks configs into `~/.config`, `~/.local/bin`, and the home directory directly (no `stow`) |
+| `claude` | `claude` | Symlinks `claude/` into `~/.claude` and `~/.agents/skills` |
 
 Re-run any time to reconverge.
 
@@ -58,7 +62,7 @@ Re-run any time to reconverge.
 ```zsh
 cd ansible
 ansible-playbook site.yml --tags packages
-ansible-playbook site.yml --tags stow
+ansible-playbook site.yml --tags symlinks
 ```
 
 </details>
