@@ -24,16 +24,18 @@
     - { src: "zsh/.fzf.zsh", dest: ".fzf.zsh" }
     - { src: "zsh/.p10k.zsh", dest: ".p10k.zsh" }
 
+# skhd and yabai keep their configs under a nested .config/<app>/ path, so the
+# link source is not just the top-level package dir the way it is for nvim.
 - name: Symlink ~/.config apps
   ansible.builtin.file:
-    src: "{{ dotfiles_dir }}/{{ item }}"
-    dest: "{{ ansible_env.HOME }}/.config/{{ item }}"
+    src: "{{ dotfiles_dir }}/{{ item.src }}"
+    dest: "{{ ansible_env.HOME }}/.config/{{ item.dest }}"
     state: link
     force: true
   loop:
-    - nvim
-    - skhd
-    - yabai
+    - { src: "nvim", dest: "nvim" }
+    - { src: "skhd/.config/skhd", dest: "skhd" }
+    - { src: "yabai/.config/yabai", dest: "yabai" }
 
 - name: Symlink scripts into ~/.local/bin
   ansible.builtin.file:
