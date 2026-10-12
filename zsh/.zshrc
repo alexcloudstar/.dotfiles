@@ -49,6 +49,14 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.local/bin:$PATH"
 
+# ~/.local/bin/git is a symlink straight to the CLT git binary (see
+# ansible/roles/symlinks), bypassing /usr/bin/git's xcrun trampoline, which
+# crashes under Rosetta. But git picks its exec-path (where git-submodule,
+# git-remote-https, etc. live) from how it was invoked, not the symlink's
+# real target, so invoking it through that symlink leaves it unable to find
+# its own subcommand helpers. Pointing GIT_EXEC_PATH at the real location
+# fixes that for every invocation, symlinked or not.
+export GIT_EXEC_PATH="/Library/Developer/CommandLineTools/usr/libexec/git-core"
 
 [[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
 
