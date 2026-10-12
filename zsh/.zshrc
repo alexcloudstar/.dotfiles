@@ -94,3 +94,6 @@ export PATH="/opt/homebrew/opt/python@3.14/bin:$PATH"
 
 # Added by Antigravity IDE
 export PATH="/Users/stefanalexandruromila/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# opencode
+export PATH=/Users/stefanalexandruromila/.opencode/bin:$PATH
