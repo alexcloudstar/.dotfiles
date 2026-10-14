@@ -20,5 +20,6 @@
     - { src: "settings.json", dest: ".claude/settings.json" }
     - { src: "plugins/installed_plugins.json", dest: ".claude/plugins/installed_plugins.json" }
     - { src: "guides", dest: ".claude/guides" }
+    - { src: "mods", dest: ".claude/mods" }
     - { src: "skills", dest: ".claude/skills" }
     - { src: "skills", dest: ".agents/skills" }
