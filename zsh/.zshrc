@@ -36,8 +36,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
-alias python=python3
-
 # bun completions
 [ -s "/Users/stefanalexandruromila/.bun/_bun" ] && source "/Users/stefanalexandruromila/.bun/_bun"
 
@@ -97,8 +95,6 @@ export PATH="$PNPM_HOME:$PATH"
 
 # Docker
 export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
-
-export PATH="/opt/homebrew/opt/python@3.14/bin:$PATH"
 
 # Added by Antigravity IDE
 export PATH="/Users/stefanalexandruromila/.antigravity-ide/antigravity-ide/bin:$PATH"
