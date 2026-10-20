@@ -101,3 +101,4 @@ export PATH="/Users/stefanalexandruromila/.antigravity-ide/antigravity-ide/bin:$
 
 # opencode
 export PATH=/Users/stefanalexandruromila/.opencode/bin:$PATH
+alias python=python3
