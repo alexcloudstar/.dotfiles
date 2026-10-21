@@ -69,6 +69,57 @@ ansible-playbook site.yml --tags symlinks
 ansible-playbook site.yml --tags upkeep
 ```
 
+Every role is a tag, so you can also skip one. `bootstrap.sh` forwards its arguments to `ansible-playbook`:
+
+```zsh
+./bootstrap.sh --skip-tags claude              # no access to the private submodule
+./bootstrap.sh --skip-tags packages            # keep your own brew setup
+./bootstrap.sh --skip-tags claude,packages
+```
+
+Skipping `packages` has side effects: the `shell` role expects Homebrew zsh and the `languages` role expects `go` from brew, so install those yourself or skip those roles too.
+
+</details>
+
+## Packages
+
+The `packages` role installs everything below. The source of truth is `ansible/roles/packages/vars/main.yml`, so edit that file and re-run `--tags packages` rather than running `brew install` by hand.
+
+<details>
+<summary><strong>Taps</strong></summary>
+
+`asmvik/formulae`, `anomalyco/tap`, `jithin-sabu/tap`, `stripe/stripe-cli`. Formulae from third-party taps are ignored by brew until trusted, so the role runs `brew trust` for `skhd` and `yabai`.
+
+</details>
+
+<details>
+<summary><strong>Formulae</strong></summary>
+
+| Group | Packages |
+| --- | --- |
+| Shell and terminal | `zsh`, `bash`, `tmux`, `fzf`, `eza`, `fd`, `ripgrep`, `tree`, `wget`, `powerlevel10k`, `reattach-to-user-namespace`, `stow` |
+| Editors | `neovim`, `vim`, `tree-sitter-cli` |
+| Window management | `yabai`, `skhd` |
+| Languages and build | `go`, `python@3.14`, `llvm`, `cmake`, `cmake-docs` |
+| Dev tools | `ansible`, `gh`, `git-filter-repo`, `colima`, `railway`, `stripe`, `opencode`, `mcp-publisher`, `geckodriver` |
+| Media and AI | `ffmpeg`, `ffmpeg-full`, `whisper-cpp` |
+| Other | `tor` |
+
+</details>
+
+<details>
+<summary><strong>Casks</strong></summary>
+
+| Group | Packages |
+| --- | --- |
+| Terminals | `iterm2`, `ghostty` |
+| Editor | `visual-studio-code` |
+| Browser | `google-chrome` |
+| AI | `claude`, `chatgpt`, `codex`, `ollama-app` |
+| Dev | `docker-desktop` |
+| Utilities | `raycast`, `monitorcontrol`, `keycastr`, `obs`, `purge` |
+| Fonts | `font-meslo-lg-nerd-font` |
+
 </details>
 
 ## Folder structure
