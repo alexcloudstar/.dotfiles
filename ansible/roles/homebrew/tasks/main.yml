@@ -14,5 +14,6 @@
 - name: Update Homebrew
   community.general.homebrew:
     update_homebrew: true
+    path: "{{ brew_bin | dirname }}"
   environment:
     PATH: "{{ brew_bin | dirname }}:{{ ansible_facts['env']['PATH'] }}"

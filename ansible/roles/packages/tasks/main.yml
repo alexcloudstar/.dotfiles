@@ -2,16 +2,21 @@
 - name: Tap third-party Homebrew repos
   community.general.homebrew_tap:
     name: "{{ item }}"
+    path: "{{ brew_bin | dirname }}"
     state: present
   loop: "{{ homebrew_taps }}"
 
 - name: Install Homebrew formulae
   community.general.homebrew:
     name: "{{ homebrew_formulae }}"
+    path: "{{ brew_bin | dirname }}"
     state: present
 
 - name: Install Homebrew casks
   community.general.homebrew_cask:
     name: "{{ homebrew_casks }}"
+    path: "{{ brew_bin | dirname }}"
     state: present
     accept_external_apps: true
+    # Fonts left behind by the old Intel brew would otherwise abort the install.
+    install_options: force

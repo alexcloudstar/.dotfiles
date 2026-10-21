@@ -50,7 +50,7 @@ That's it. Grab a coffee, first run takes about 15 minutes.
 | `homebrew` | `homebrew` | Installs Homebrew itself if missing, updates it |
 | `packages` | `packages` | Taps and installs formulae/casks from `ansible/roles/packages/vars/main.yml` |
 | `shell` | `shell` | Installs oh-my-zsh + plugins, sets Homebrew zsh as the login shell |
-| `languages` | `languages` | Installs nvm/node, bun, rustup, and pyenv + the pinned Python version |
+| `languages` | `languages` | Installs nvm/node, bun, and rustup |
 | `symlinks` | `symlinks` | Symlinks configs into `~/.config`, `~/.local/bin`, and the home directory directly (no `stow`) |
 | `claude` | `claude` | Symlinks `claude/` into `~/.claude` and `~/.agents/skills` |
 

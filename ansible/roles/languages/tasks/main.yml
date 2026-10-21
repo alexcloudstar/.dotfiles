@@ -61,6 +61,26 @@
     executable: /bin/bash
   when: not rustup_stat.stat.exists
 
+# An rustup installed under Rosetta is an x86_64 binary and cannot install
+# aarch64 toolchains. Replace it with the native one, keeping existing toolchains.
+- name: Check rustup binary architecture
+  ansible.builtin.command: "/usr/bin/file -b {{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup"
+  register: rustup_file
+  changed_when: false
+  check_mode: false
+  when: rustup_stat.stat.exists
+
+- name: Reinstall rustup natively (aarch64)
+  ansible.builtin.shell: |
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path --default-toolchain none --default-host aarch64-apple-darwin
+    {{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup set default-host aarch64-apple-darwin
+  args:
+    executable: /bin/bash
+  when:
+    - rustup_stat.stat.exists
+    - "'x86_64' in (rustup_file.stdout | default(''))"
+    - "'arm64' not in (rustup_file.stdout | default(''))"
+
 - name: Ensure rust toolchain is up to date
   ansible.builtin.command: "{{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup update {{ rustup_toolchain }}"
   register: rustup_update
@@ -89,17 +109,3 @@
 - name: Set native aarch64 rust toolchain as default
   ansible.builtin.command: "{{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup default {{ rust_native_toolchain }}"
   when: rust_default_is_x86
-
-# ---------- pyenv python ----------
-- name: Check installed pyenv versions
-  ansible.builtin.command: "{{ brew_bin | dirname }}/pyenv versions --bare"
-  register: pyenv_versions
-  changed_when: false
-
-- name: Install Python {{ python_version }} via pyenv
-  ansible.builtin.command: "{{ brew_bin | dirname }}/pyenv install {{ python_version }}"
-  when: python_version not in pyenv_versions.stdout_lines
-
-- name: Set global Python version
-  ansible.builtin.command: "{{ brew_bin | dirname }}/pyenv global {{ python_version }}"
-  changed_when: false

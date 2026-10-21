@@ -23,7 +23,7 @@ homebrew_formulae:
   - neovim
   - pipx
   - powerlevel10k
-  - pyenv
+  - python
   - reattach-to-user-namespace
   - ripgrep
   - tmux
