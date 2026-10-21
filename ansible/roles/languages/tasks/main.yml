@@ -21,19 +21,35 @@
   args:
     executable: /bin/bash
   register: nvm_install
-  changed_when: "'is already installed' not in nvm_install.stdout"
+  changed_when: "'Downloading and installing node' in nvm_install.stdout"
 
-- name: Install global npm packages
+# Read-only probe: rc 0 means the package is already installed globally.
+- name: Check global npm packages
   ansible.builtin.shell: |
     export NVM_DIR="$HOME/.nvm"
     . "$NVM_DIR/nvm.sh"
     nvm use default >/dev/null
-    npm install -g {{ item }}
+    npm ls -g --depth=0 {{ item }}
   args:
     executable: /bin/bash
   loop: "{{ npm_global_packages }}"
-  register: npm_install
-  changed_when: "'up to date' not in npm_install.stdout"
+  register: npm_check
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: Install missing global npm packages
+  ansible.builtin.shell: |
+    export NVM_DIR="$HOME/.nvm"
+    . "$NVM_DIR/nvm.sh"
+    nvm use default >/dev/null
+    npm install -g {{ item.item }}
+  args:
+    executable: /bin/bash
+  loop: "{{ npm_check.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+  when: item.rc != 0
 
 # ---------- bun ----------
 - name: Check for bun
@@ -110,8 +126,16 @@
   ansible.builtin.command: "{{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup default {{ rust_native_toolchain }}"
   when: rust_default_is_x86
 
-- name: Install go tools
-  ansible.builtin.command: "{{ brew_bin | dirname }}/go install {{ item }}@latest"
+# Installed only when the binary is missing; re-run `go install ...@latest` by hand to update.
+- name: Check installed go tools
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['env']['HOME'] }}/go/bin/{{ item | basename }}"
   loop: "{{ go_tools }}"
-  register: go_install
-  changed_when: "'downloading' in go_install.stderr"
+  register: go_tool_stats
+
+- name: Install missing go tools
+  ansible.builtin.command: "{{ brew_bin | dirname }}/go install {{ item.item }}@latest"
+  loop: "{{ go_tool_stats.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+  when: not item.stat.exists
