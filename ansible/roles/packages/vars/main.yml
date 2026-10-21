@@ -2,8 +2,11 @@
 homebrew_taps:
   - koekeishiya/formulae
   - stripe/stripe-cli
+  - runpod/runpodctl
 
 homebrew_formulae:
+  - ansible
+  - bash
   - cmake
   - cmake-docs
   - lua
@@ -30,7 +33,9 @@ homebrew_formulae:
   - whisper-cpp
   - koekeishiya/formulae/skhd
   - koekeishiya/formulae/yabai
+  - stow
   - stripe/stripe-cli/stripe
 
 homebrew_casks:
   - font-meslo-lg-nerd-font
+  - runpodctl

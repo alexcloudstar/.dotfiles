@@ -1,20 +1,26 @@
 ---
+# Resolve the ".." in dotfiles_dir so link sources are canonical and existing
+# symlinks compare equal on re-runs.
+- name: Normalise dotfiles root
+  ansible.builtin.set_fact:
+    dotfiles_root: "{{ dotfiles_dir | realpath }}"
+
 - name: Ensure ~/.config exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.config"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config"
     state: directory
     mode: "0755"
 
 - name: Ensure ~/.local/bin exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.local/bin"
+    path: "{{ ansible_facts['env']['HOME'] }}/.local/bin"
     state: directory
     mode: "0755"
 
 - name: Symlink home-level dotfiles
   ansible.builtin.file:
-    src: "{{ dotfiles_dir }}/{{ item.src }}"
-    dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
+    src: "{{ dotfiles_root }}/{{ item.src }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/{{ item.dest }}"
     state: link
     force: true
   loop:
@@ -28,8 +34,8 @@
 # link source is not just the top-level package dir the way it is for nvim.
 - name: Symlink ~/.config apps
   ansible.builtin.file:
-    src: "{{ dotfiles_dir }}/{{ item.src }}"
-    dest: "{{ ansible_env.HOME }}/.config/{{ item.dest }}"
+    src: "{{ dotfiles_root }}/{{ item.src }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/{{ item.dest }}"
     state: link
     force: true
   loop:
@@ -39,8 +45,8 @@
 
 - name: Symlink scripts into ~/.local/bin
   ansible.builtin.file:
-    src: "{{ dotfiles_dir }}/local/{{ item }}"
-    dest: "{{ ansible_env.HOME }}/.local/bin/{{ item }}"
+    src: "{{ dotfiles_root }}/local/{{ item }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/bin/{{ item }}"
     state: link
     force: true
   loop:
@@ -58,6 +64,6 @@
 - name: Symlink arm64 git into ~/.local/bin to bypass the broken xcrun trampoline under Rosetta
   ansible.builtin.file:
     src: /Library/Developer/CommandLineTools/usr/bin/git
-    dest: "{{ ansible_env.HOME }}/.local/bin/git"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/bin/git"
     state: link
     force: true

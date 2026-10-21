@@ -2,7 +2,7 @@
 # ---------- nvm + node ----------
 - name: Check for nvm
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+    path: "{{ ansible_facts['env']['HOME'] }}/.nvm/nvm.sh"
   register: nvm_stat
 
 - name: Install nvm
@@ -33,12 +33,12 @@
     executable: /bin/bash
   loop: "{{ npm_global_packages }}"
   register: npm_install
-  changed_when: "'added' in npm_install.stdout or 'changed' in npm_install.stdout"
+  changed_when: "'up to date' not in npm_install.stdout"
 
 # ---------- bun ----------
 - name: Check for bun
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.bun/bin/bun"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bun/bin/bun"
   register: bun_stat
 
 - name: Install bun
@@ -51,20 +51,44 @@
 # ---------- rustup ----------
 - name: Check for rustup
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
+    path: "{{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup"
   register: rustup_stat
 
 - name: Install rustup
   ansible.builtin.shell: |
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain {{ rustup_toolchain }}
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain {{ rustup_toolchain }} --default-host aarch64-apple-darwin
   args:
     executable: /bin/bash
   when: not rustup_stat.stat.exists
 
 - name: Ensure rust toolchain is up to date
-  ansible.builtin.command: "{{ ansible_env.HOME }}/.cargo/bin/rustup update {{ rustup_toolchain }}"
+  ansible.builtin.command: "{{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup update {{ rustup_toolchain }}"
   register: rustup_update
   changed_when: "'unchanged' not in rustup_update.stdout"
+
+# Read-only query, safe in check mode. The install and default tasks below
+# are skipped in check mode because the command module does not support it.
+- name: Read installed rust toolchains
+  ansible.builtin.command: "{{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup toolchain list"
+  register: rustup_toolchains
+  changed_when: false
+  check_mode: false
+  when: rustup_stat.stat.exists
+
+- name: Check whether the default rust toolchain is x86_64
+  ansible.builtin.set_fact:
+    rust_default_is_x86: "{{ (rustup_toolchains.stdout_lines | default([])) | select('search', 'default') | select('search', 'x86_64-apple-darwin') | list | length > 0 }}"
+
+- name: Install native aarch64 rust toolchain
+  ansible.builtin.command: "{{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup toolchain install {{ rust_native_toolchain }}"
+  when:
+    - rust_default_is_x86
+    - rust_native_toolchain not in (rustup_toolchains.stdout | default(''))
+
+# The x86_64 toolchain is left installed. Remove it by hand once the native one works.
+- name: Set native aarch64 rust toolchain as default
+  ansible.builtin.command: "{{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup default {{ rust_native_toolchain }}"
+  when: rust_default_is_x86
 
 # ---------- pyenv python ----------
 - name: Check installed pyenv versions

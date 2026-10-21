@@ -1,8 +1,4 @@
 ---
-- name: Detect Homebrew binary path
-  ansible.builtin.set_fact:
-    brew_bin: "{{ '/opt/homebrew/bin/brew' if ansible_facts['architecture'] == 'arm64' else '/usr/local/bin/brew' }}"
-
 - name: Check if Homebrew is installed
   ansible.builtin.stat:
     path: "{{ brew_bin }}"
@@ -19,4 +15,4 @@
   community.general.homebrew:
     update_homebrew: true
   environment:
-    PATH: "{{ brew_bin | dirname }}:{{ ansible_env.PATH }}"
+    PATH: "{{ brew_bin | dirname }}:{{ ansible_facts['env']['PATH'] }}"
