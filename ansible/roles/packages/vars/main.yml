@@ -2,15 +2,14 @@
 homebrew_taps:
   - asmvik/formulae
   - anomalyco/tap
+  - jithin-sabu/tap
   - stripe/stripe-cli
-  - runpod/runpodctl
 
 homebrew_formulae:
   - ansible
   - bash
   - cmake
   - cmake-docs
-  - lua
   - zsh
   - colima
   - eza
@@ -18,7 +17,6 @@ homebrew_formulae:
   - ffmpeg
   - ffmpeg-full
   - fzf
-  - gdb
   - geckodriver
   - gh
   - git-filter-repo
@@ -26,7 +24,6 @@ homebrew_formulae:
   - llvm
   - mcp-publisher
   - neovim
-  - pipx
   - powerlevel10k
   - python
   - railway
@@ -46,10 +43,18 @@ homebrew_formulae:
   - stripe/stripe-cli/stripe
 
 homebrew_casks:
+  - chatgpt
+  - claude
   - codex
+  - docker-desktop
   - font-meslo-lg-nerd-font
   - ghostty
+  - google-chrome
+  - iterm2
   - keycastr
   - monitorcontrol
-  - purge
-  - runpodctl
+  - obs
+  - ollama-app
+  - jithin-sabu/tap/purge
+  - raycast
+  - visual-studio-code

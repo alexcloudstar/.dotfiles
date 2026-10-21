@@ -109,3 +109,9 @@
 - name: Set native aarch64 rust toolchain as default
   ansible.builtin.command: "{{ ansible_facts['env']['HOME'] }}/.cargo/bin/rustup default {{ rust_native_toolchain }}"
   when: rust_default_is_x86
+
+- name: Install go tools
+  ansible.builtin.command: "{{ brew_bin | dirname }}/go install {{ item }}@latest"
+  loop: "{{ go_tools }}"
+  register: go_install
+  changed_when: "'downloading' in go_install.stderr"

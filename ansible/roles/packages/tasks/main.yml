@@ -20,3 +20,14 @@
     accept_external_apps: true
     # Fonts left behind by the old Intel brew would otherwise abort the install.
     install_options: force
+
+- name: Upgrade Homebrew formulae and casks
+  community.general.homebrew:
+    upgrade_all: true
+    path: "{{ brew_bin | dirname }}"
+  tags: [never, upkeep]
+
+- name: Remove old Homebrew downloads and versions
+  ansible.builtin.command: "{{ brew_bin }} cleanup"
+  changed_when: true
+  tags: [never, upkeep]
