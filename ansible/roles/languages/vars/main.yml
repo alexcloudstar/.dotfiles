@@ -6,5 +6,3 @@ rust_native_toolchain: "{{ rustup_toolchain }}-aarch64-apple-darwin"
 
 npm_global_packages:
   - vercel
-  - clerk
-  - neon
