@@ -19,6 +19,14 @@
     path: "{{ brew_bin | dirname }}"
     state: present
 
+# The docker-desktop cask links docker-compose here with sudo, which fails without a tty.
+- name: Create Docker CLI plugins directory
+  ansible.builtin.file:
+    path: /usr/local/cli-plugins
+    state: directory
+    mode: "0755"
+  become: true
+
 - name: Install Homebrew casks
   community.general.homebrew_cask:
     name: "{{ homebrew_casks }}"
