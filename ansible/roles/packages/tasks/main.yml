@@ -25,8 +25,6 @@
     path: "{{ brew_bin | dirname }}"
     state: present
     accept_external_apps: true
-    # Fonts left behind by the old Intel brew would otherwise abort the install.
-    install_options: force
 
 - name: Upgrade Homebrew formulae and casks
   community.general.homebrew:
