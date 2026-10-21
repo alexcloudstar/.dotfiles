@@ -1,6 +1,7 @@
 ---
 homebrew_taps:
-  - koekeishiya/formulae
+  - asmvik/formulae
+  - anomalyco/tap
   - stripe/stripe-cli
   - runpod/runpodctl
 
@@ -15,27 +16,40 @@ homebrew_formulae:
   - eza
   - fd
   - ffmpeg
+  - ffmpeg-full
   - fzf
   - gdb
+  - geckodriver
   - gh
+  - git-filter-repo
   - go
   - llvm
+  - mcp-publisher
   - neovim
   - pipx
   - powerlevel10k
   - python
+  - railway
   - reattach-to-user-namespace
   - ripgrep
   - tmux
+  - tor
   - tree
+  - tree-sitter-cli
   - vim
   - wget
   - whisper-cpp
-  - koekeishiya/formulae/skhd
-  - koekeishiya/formulae/yabai
+  - asmvik/formulae/skhd
+  - asmvik/formulae/yabai
+  - anomalyco/tap/opencode
   - stow
   - stripe/stripe-cli/stripe
 
 homebrew_casks:
+  - codex
   - font-meslo-lg-nerd-font
+  - ghostty
+  - keycastr
+  - monitorcontrol
+  - purge
   - runpodctl

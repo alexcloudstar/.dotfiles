@@ -15,6 +15,34 @@
     - "{{ ansible_facts['env']['HOME'] }}/.claude/plugins"
     - "{{ ansible_facts['env']['HOME'] }}/.agents"
 
+- name: Define Claude Code directory link destinations
+  ansible.builtin.set_fact:
+    claude_dir_link_dests:
+      - "{{ ansible_facts['env']['HOME'] }}/.claude/guides"
+      - "{{ ansible_facts['env']['HOME'] }}/.claude/mods"
+      - "{{ ansible_facts['env']['HOME'] }}/.claude/skills"
+      - "{{ ansible_facts['env']['HOME'] }}/.agents/skills"
+
+- name: Check for existing real directories at Claude Code link destinations
+  ansible.builtin.stat:
+    path: "{{ item }}"
+    follow: false
+  register: claude_dir_link_stats
+  check_mode: false
+  loop: "{{ claude_dir_link_dests }}"
+
+- name: Move aside real directories blocking Claude Code symlinks
+  ansible.builtin.command:
+    argv:
+      - mv
+      - "{{ item.item }}"
+      - "{{ item.item }}.pre-dotfiles-bak"
+    creates: "{{ item.item }}.pre-dotfiles-bak"
+  when: item.stat.exists and item.stat.isdir and not item.stat.islnk
+  loop: "{{ claude_dir_link_stats.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+
 - name: Symlink Claude Code config files
   ansible.builtin.file:
     src: "{{ dotfiles_root }}/claude/{{ item.src }}"
