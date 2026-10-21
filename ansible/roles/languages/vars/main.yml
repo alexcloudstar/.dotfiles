@@ -6,3 +6,10 @@ rust_native_toolchain: "{{ rustup_toolchain }}-aarch64-apple-darwin"
 
 npm_global_packages:
   - vercel
+
+go_tools:
+  - golang.org/x/tools/gopls
+  - github.com/cweill/gotests/gotests
+  - github.com/fatih/gomodifytags
+  - github.com/ramya-rao-a/go-outline
+  - github.com/haya14busa/goplay/cmd/goplay

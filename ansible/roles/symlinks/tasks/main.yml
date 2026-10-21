@@ -52,18 +52,3 @@
   loop:
     - cht.sh
     - tmux-sessionizer
-
-# On Apple Silicon, /usr/bin/git is a universal binary. If the parent process
-# runs under Rosetta (as cmux and some other sandboxes do), the kernel picks
-# git's x86_64 slice, which then tries to dlopen libxcrun.dylib for Xcode
-# Command Line Tools - a library Apple now ships arm64-only. That fails with
-# "unable to load libxcrun" even though a working git is right there.
-# ~/.local/bin is earlier on PATH than /usr/bin, so pointing git straight at
-# the arm64-only CLT binary (no x86_64 slice to mistakenly prefer) sidesteps
-# the broken trampoline entirely.
-- name: Symlink arm64 git into ~/.local/bin to bypass the broken xcrun trampoline under Rosetta
-  ansible.builtin.file:
-    src: /Library/Developer/CommandLineTools/usr/bin/git
-    dest: "{{ ansible_facts['env']['HOME'] }}/.local/bin/git"
-    state: link
-    force: true
