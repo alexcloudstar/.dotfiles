@@ -5,6 +5,23 @@
   ansible.builtin.set_fact:
     dotfiles_root: "{{ dotfiles_dir | realpath }}"
 
+# claude/ is a private submodule. On a clone without it the folder is empty, and
+# linking from it would replace real files in ~/.claude with dangling symlinks.
+- name: Check that the claude submodule is checked out
+  ansible.builtin.stat:
+    path: "{{ dotfiles_root }}/claude/CLAUDE.md"
+  register: claude_submodule_stat
+  check_mode: false
+
+- name: Explain why the claude role is skipped
+  ansible.builtin.debug:
+    msg: "claude/ is empty (private submodule not checked out), skipping the claude role."
+  when: not claude_submodule_stat.stat.exists
+
+- name: Skip the rest of the claude role without the submodule
+  ansible.builtin.meta: end_role
+  when: not claude_submodule_stat.stat.exists
+
 - name: Ensure Claude Code directories exist
   ansible.builtin.file:
     path: "{{ item }}"

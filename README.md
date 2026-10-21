@@ -42,10 +42,10 @@ This is my personal setup. Fork it, change the package lists and git identity, t
 ```zsh
 git clone https://github.com/alexcloudstar/.dotfiles ~/.dotfiles
 cd ~/.dotfiles
-./bootstrap.sh --skip-tags claude
+./bootstrap.sh
 ```
 
-`bootstrap.sh` asks for your sudo password once. The first run takes about 15 minutes. `--skip-tags claude` is required unless you have access to my private Claude Code config (see below).
+`bootstrap.sh` asks for your sudo password once. The first run takes about 15 minutes. Without access to my private Claude Code config (see below), the `claude` role skips itself.
 
 > [!WARNING]
 > **Read before you run it.** The playbook changes your machine:
@@ -53,7 +53,7 @@ cd ~/.dotfiles
 > - Sets Homebrew zsh as your login shell.
 > - Installs about 35 formulae and 15 casks from [`packages/vars/main.yml`](ansible/roles/packages/vars/main.yml).
 >
-> To preview without changing anything: `cd ansible && ansible-playbook site.yml --check --diff --skip-tags claude --ask-become-pass`.
+> To preview without changing anything: `cd ansible && ansible-playbook site.yml --check --diff --ask-become-pass`.
 
 > [!NOTE]
 > **Apple Silicon only.** Homebrew lives at `/opt/homebrew`, and `bootstrap.sh` exits if it detects Rosetta. Intel Macs need manual path changes in `zsh/.zshrc`.
@@ -65,10 +65,10 @@ cd ~/.dotfiles
 
 `claude/` holds my Claude Code config (`git@github.com:alexcloudstar/dotfiles-claude.git`) and is not public.
 
-- **A plain clone** leaves `claude/` empty. Always pass `--skip-tags claude`. Without it, the `claude` role links files that do not exist into `~/.claude`.
+- **A plain clone** leaves `claude/` empty. The `claude` role checks for `claude/CLAUDE.md` and ends itself with a message when it is missing, so nothing in `~/.claude` is touched.
 - **`git clone --recurse-submodules`** fails without access to that repo.
-- **Forking:** point `.gitmodules` at your own repo, or keep skipping the role.
-- **With access**, clone with submodules and drop the flag:
+- **Forking:** point `.gitmodules` at your own repo, or skip the role explicitly with `--skip-tags claude`.
+- **With access**, clone with submodules:
 
 ```zsh
 git clone --recurse-submodules https://github.com/alexcloudstar/.dotfiles ~/.dotfiles
