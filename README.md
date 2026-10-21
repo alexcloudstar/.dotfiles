@@ -35,8 +35,8 @@ That's it. Grab a coffee, first run takes about 15 minutes.
 | [**Neovim**](https://neovim.io)        | Editor with full Lua config + plugins  | `nvim/` → `~/.config/nvim`      |
 | [**Zsh**](https://www.zsh.org)         | Shell with oh-my-zsh + Powerlevel10k   | `zsh/`                          |
 | [**tmux**](https://github.com/tmux)    | Terminal multiplexer                   | `tmux/`                         |
-| [**yabai**](https://github.com/koekeishiya/yabai) | Tiling window manager       | `yabai/` → `~/.config/yabai`    |
-| [**skhd**](https://github.com/koekeishiya/skhd)   | Hotkey daemon for yabai     | `skhd/` → `~/.config/skhd`      |
+| [**yabai**](https://github.com/asmvik/yabai) | Tiling window manager       | `yabai/` → `~/.config/yabai`    |
+| [**skhd**](https://github.com/asmvik/skhd)   | Hotkey daemon for yabai     | `skhd/` → `~/.config/skhd`      |
 | **Git**                                | `.gitconfig` + helper scripts          | `gitconfig`                     |
 | **Claude Code**                        | Private config (git submodule)         | `claude/` → `~/.claude/`        |
 | **Local scripts**                      | Personal utilities                     | `local/` → `~/.local/bin`       |
@@ -48,9 +48,9 @@ That's it. Grab a coffee, first run takes about 15 minutes.
 | Role | Tag | Does |
 | --- | --- | --- |
 | `homebrew` | `homebrew` | Installs Homebrew itself if missing, updates it |
-| `packages` | `packages` | Taps and installs formulae/casks from `ansible/roles/packages/vars/main.yml` |
+| `packages` | `packages` | Taps and installs formulae/casks from `ansible/roles/packages/vars/main.yml`. The `upkeep` tag (`brew upgrade` + `brew cleanup`) never runs by default |
 | `shell` | `shell` | Installs oh-my-zsh + plugins, sets Homebrew zsh as the login shell |
-| `languages` | `languages` | Installs nvm/node, bun, and rustup |
+| `languages` | `languages` | Installs nvm/node, bun, rustup, and go tools |
 | `symlinks` | `symlinks` | Symlinks configs into `~/.config`, `~/.local/bin`, and the home directory directly (no `stow`) |
 | `claude` | `claude` | Symlinks `claude/` into `~/.claude` and `~/.agents/skills` |
 
@@ -63,6 +63,7 @@ Re-run any time to reconverge.
 cd ansible
 ansible-playbook site.yml --tags packages
 ansible-playbook site.yml --tags symlinks
+ansible-playbook site.yml --tags upkeep
 ```
 
 </details>
@@ -71,20 +72,22 @@ ansible-playbook site.yml --tags symlinks
 
 ```
 .dotfiles
-├── ansible/    # provisioning playbook
-├── claude/     # submodule: private Claude Code config
-├── gitconfig
-├── local/      # scripts → ~/.local/bin
-├── nvim/       # → ~/.config/nvim
-├── skhd/       # → ~/.config/skhd
+├── ansible/       # provisioning playbook
+├── claude/        # submodule: private Claude Code config
+├── gitconfig/
+├── local/         # scripts → ~/.local/bin
+├── nvim/          # → ~/.config/nvim
+├── skhd/          # → ~/.config/skhd
 ├── tmux/
-├── yabai/      # → ~/.config/yabai
-└── zsh/
+├── yabai/         # → ~/.config/yabai
+├── zsh/
+├── bootstrap.sh
+└── LICENSE
 ```
 
 ## Customize
 
-Fork it. Swap themes, plugins, shortcuts. Drop new scripts in `local/.local/bin`.
+Fork it. Swap themes, plugins, shortcuts. Drop new scripts in `local/` and add them to the `symlinks` role.
 
 ## Contributing
 
