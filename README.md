@@ -26,7 +26,7 @@ cd ~/.dotfiles
 That's it. Grab a coffee, first run takes about 15 minutes.
 
 > [!NOTE]
-> Apple Silicon assumed (Homebrew at `/opt/homebrew`). Intel Macs need manual path tweaks in `zsh/.zshrc` and `zsh/.fzf.zsh`.
+> Apple Silicon only. Homebrew lives at `/opt/homebrew`, and `bootstrap.sh` exits if it detects Rosetta. Intel Macs need manual path changes in `zsh/.zshrc`. Running a shell under Rosetta is unsupported.
 
 ## What's inside
 
