@@ -5,6 +5,10 @@ homebrew_taps:
   - jithin-sabu/tap
   - stripe/stripe-cli
 
+homebrew_trusted_formulae:
+  - asmvik/formulae/skhd
+  - asmvik/formulae/yabai
+
 homebrew_formulae:
   - ansible
   - bash

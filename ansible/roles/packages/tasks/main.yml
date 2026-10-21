@@ -6,6 +6,13 @@
     state: present
   loop: "{{ homebrew_taps }}"
 
+# Brew ignores formulae from untrusted taps, so trust only the ones we install.
+- name: Trust third-party tap formulae
+  ansible.builtin.command: "{{ brew_bin }} trust --formula {{ homebrew_trusted_formulae | join(' ') }}"
+  register: brew_trust
+  changed_when: "'Already trusted' not in brew_trust.stdout"
+  when: homebrew_trusted_formulae | length > 0
+
 - name: Install Homebrew formulae
   community.general.homebrew:
     name: "{{ homebrew_formulae }}"
