@@ -34,7 +34,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$HOME/.yarn/bin:$PATH"
 
 # bun completions
 [ -s "/Users/stefanalexandruromila/.bun/_bun" ] && source "/Users/stefanalexandruromila/.bun/_bun"
@@ -95,9 +95,6 @@ export PATH="$PNPM_HOME:$PATH"
 
 # Docker
 export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
-
-# Added by Antigravity IDE
-export PATH="/Users/stefanalexandruromila/.antigravity-ide/antigravity-ide/bin:$PATH"
 
 # opencode
 export PATH=/Users/stefanalexandruromila/.opencode/bin:$PATH
