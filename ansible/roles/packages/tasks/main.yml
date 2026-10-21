@@ -34,13 +34,17 @@
     state: present
     accept_external_apps: true
 
+# The role tag (packages) is applied to every task here, `never` included, so
+# `--tags packages` would pull these in. The `when` keeps them upkeep-only.
 - name: Upgrade Homebrew formulae and casks
   community.general.homebrew:
     upgrade_all: true
     path: "{{ brew_bin | dirname }}"
   tags: [never, upkeep]
+  when: "'upkeep' in ansible_run_tags"
 
 - name: Remove old Homebrew downloads and versions
   ansible.builtin.command: "{{ brew_bin }} cleanup"
   changed_when: true
   tags: [never, upkeep]
+  when: "'upkeep' in ansible_run_tags"
