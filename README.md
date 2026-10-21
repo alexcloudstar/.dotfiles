@@ -1,15 +1,22 @@
 <div align="center">
 
-#  .dotfiles
+# .dotfiles
 
-**My personal macOS environment as code.**
-Terminal, editor, window manager, and shell, provisioned in one shot.
+**My macOS environment as code.**
+Terminal, editor, window manager, and shell, provisioned with one command.
 
-[![macOS](https://img.shields.io/badge/macOS-Apple_Silicon-000000?style=flat-square&logo=apple&logoColor=white)](https://www.apple.com/macos/)
-[![Shell](https://img.shields.io/badge/shell-zsh-89e051?style=flat-square&logo=gnubash&logoColor=white)](https://www.zsh.org/)
-[![Editor](https://img.shields.io/badge/editor-neovim-57A143?style=flat-square&logo=neovim&logoColor=white)](https://neovim.io/)
-[![Provisioner](https://img.shields.io/badge/provisioner-ansible-EE0000?style=flat-square&logo=ansible&logoColor=white)](https://www.ansible.com/)
-[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](#license)
+[![macOS](https://img.shields.io/badge/macOS-Apple_Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://www.apple.com/macos/)
+[![Zsh](https://img.shields.io/badge/shell-zsh-89e051?style=for-the-badge&logo=gnubash&logoColor=white)](https://www.zsh.org/)
+[![Neovim](https://img.shields.io/badge/editor-neovim-57A143?style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
+[![Ansible](https://img.shields.io/badge/provisioner-ansible-EE0000?style=for-the-badge&logo=ansible&logoColor=white)](https://www.ansible.com/)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](#license)
+
+[Quick start](#quick-start) ·
+[What's inside](#whats-inside) ·
+[Provisioning](#provisioning) ·
+[Packages](#packages) ·
+[Structure](#folder-structure) ·
+[Customize](#customize)
 
 </div>
 
@@ -23,44 +30,57 @@ cd ~/.dotfiles
 ./bootstrap.sh
 ```
 
-That's it. Grab a coffee, first run takes about 15 minutes. `bootstrap.sh` asks for your sudo password once.
-
-> [!IMPORTANT]
-> `claude/` is a private submodule (`git@github.com:alexcloudstar/dotfiles-claude.git`). Without access to it the clone fails, and a clone without `--recurse-submodules` leaves `claude/` empty, so the `claude` role links nothing. If you fork this, point `.gitmodules` at your own repo or drop the `claude` role.
+`bootstrap.sh` asks for your sudo password once. The first run takes about 15 minutes.
 
 > [!NOTE]
-> Apple Silicon only. Homebrew lives at `/opt/homebrew`, and `bootstrap.sh` exits if it detects Rosetta. Intel Macs need manual path changes in `zsh/.zshrc`. Running a shell under Rosetta is unsupported.
+> **Apple Silicon only.** Homebrew lives at `/opt/homebrew`, and `bootstrap.sh` exits if it detects Rosetta. Intel Macs need manual path changes in `zsh/.zshrc`.
+
+> [!IMPORTANT]
+> **`claude/` is a private submodule** (`git@github.com:alexcloudstar/dotfiles-claude.git`). Without access, the clone fails. A clone without `--recurse-submodules` leaves `claude/` empty, so the `claude` role links nothing. If you fork this, point `.gitmodules` at your own repo or skip the role (see [Run a subset](#run-a-subset)).
 
 ## What's inside
 
-| Tool                                   | Purpose                                | Path                            |
-| -------------------------------------- | -------------------------------------- | ------------------------------- |
-| [**Neovim**](https://neovim.io)        | Editor with full Lua config + plugins  | `nvim/` → `~/.config/nvim`      |
-| [**Zsh**](https://www.zsh.org)         | Shell with oh-my-zsh, fzf, eza         | `zsh/` → `~/.zshrc`, `~/.fzf.zsh`, `~/.p10k.zsh` |
-| [**tmux**](https://github.com/tmux)    | Terminal multiplexer                   | `tmux/` → `~/.tmux.conf`        |
-| [**yabai**](https://github.com/asmvik/yabai) | Tiling window manager       | `yabai/` → `~/.config/yabai`    |
-| [**skhd**](https://github.com/asmvik/skhd)   | Hotkey daemon for yabai     | `skhd/` → `~/.config/skhd`      |
-| **Git**                                | `.gitconfig` with aliases (`co`, `br`, `ci`, `st`, `lg`) | `gitconfig/` → `~/.gitconfig` |
-| **Claude Code**                        | Private config (git submodule): `CLAUDE.md`, settings, guides, mods, skills, hooks | `claude/` → `~/.claude/`, `~/.agents/skills` |
-| **Local scripts**                      | `tmux-sessionizer` (`^f` in zsh) and `cht.sh` (`prefix + i` in tmux) | `local/` → `~/.local/bin` |
+| Tool | What it is | Lives in | Linked to |
+| :--- | :--- | :--- | :--- |
+| [**Neovim**](https://neovim.io) | Lua config, plugins via lazy.nvim | `nvim/` | `~/.config/nvim` |
+| [**Zsh**](https://www.zsh.org) | oh-my-zsh, fzf, eza | `zsh/` | `~/.zshrc`, `~/.fzf.zsh`, `~/.p10k.zsh` |
+| [**tmux**](https://github.com/tmux/tmux) | Terminal multiplexer | `tmux/` | `~/.tmux.conf` |
+| [**yabai**](https://github.com/asmvik/yabai) | Tiling window manager | `yabai/` | `~/.config/yabai` |
+| [**skhd**](https://github.com/asmvik/skhd) | Hotkey daemon for yabai | `skhd/` | `~/.config/skhd` |
+| **Git** | Aliases: `co` `br` `ci` `st` `lg` | `gitconfig/` | `~/.gitconfig` |
+| **Local scripts** | `tmux-sessionizer` (`^f` in zsh), `cht.sh` (`prefix + i` in tmux) | `local/` | `~/.local/bin` |
+| **Claude Code** | Private submodule: `CLAUDE.md`, settings, guides, mods, skills, hooks | `claude/` | `~/.claude`, `~/.agents/skills` |
 
 ## Provisioning
 
-`bootstrap.sh` installs Xcode CLT, Homebrew, and Ansible, then runs `ansible/site.yml`, which applies six roles in order:
+`bootstrap.sh` installs Xcode CLT, Homebrew, and Ansible, then runs `ansible/site.yml`. Six roles run in this order:
 
-| Role | Tag | Does |
-| --- | --- | --- |
-| `homebrew` | `homebrew` | Installs Homebrew itself if missing, updates it |
-| `packages` | `packages` | Taps and installs formulae/casks from `ansible/roles/packages/vars/main.yml`, and creates `/usr/local/cli-plugins` (needs sudo) so the Docker Desktop cask can link its plugins. Apps already in `/Applications` are left alone. To hand one to brew, trash it and run `brew install --cask <name>`. The `upkeep` tag (`brew upgrade` + `brew cleanup`) never runs by default |
-| `shell` | `shell` | Installs oh-my-zsh + `zsh-autosuggestions` and `zsh-syntax-highlighting`, adds Homebrew zsh to `/etc/shells`, and sets it as the login shell (needs sudo) |
-| `languages` | `languages` | Installs nvm + node LTS, bun, rustup (native aarch64 toolchain), global npm packages (`vercel`), and go tools |
-| `symlinks` | `symlinks` | Symlinks configs into `~/.config`, `~/.local/bin`, and the home directory directly (no `stow`) |
-| `claude` | `claude` | Links `CLAUDE.md`, `settings.json`, `guides`, `mods`, and `skills` into `~/.claude`, `skills` into `~/.agents/skills`, and each `hooks/*.sh` into `~/.claude/hooks`. A real directory already at a link destination is moved to `<name>.pre-dotfiles-bak` first |
+| # | Role | What it does |
+| :-: | :--- | :--- |
+| 1 | `homebrew` | Installs Homebrew if missing, then updates it |
+| 2 | `packages` | Installs taps, formulae, and casks from `ansible/roles/packages/vars/main.yml` |
+| 3 | `shell` | Installs oh-my-zsh, `zsh-autosuggestions`, and `zsh-syntax-highlighting`. Sets Homebrew zsh as the login shell |
+| 4 | `languages` | Installs nvm + node LTS, bun, rustup (native aarch64), global npm packages, and go tools |
+| 5 | `symlinks` | Links configs into `~/.config`, `~/.local/bin`, and `~` directly (no `stow`) |
+| 6 | `claude` | Links `claude/` into `~/.claude` and `~/.agents/skills` |
 
-Re-run any time to reconverge. `bootstrap.sh` passes `--ask-become-pass`. When you run `ansible-playbook` by hand, add it yourself and use a real terminal: the `packages` and `shell` roles need sudo.
+Every role is idempotent. Re-run any time to reconverge.
 
 <details>
-<summary><strong>Run a subset</strong></summary>
+<summary><strong>Role details</strong></summary>
+
+- **`packages`**
+  - Creates `/usr/local/cli-plugins` (needs sudo) so the Docker Desktop cask can link its plugins.
+  - Leaves apps already in `/Applications` alone. To hand one to brew, trash it and run `brew install --cask <name>`.
+  - The `upkeep` tag (`brew upgrade` + `brew cleanup`) never runs by default.
+- **`shell`** adds Homebrew zsh to `/etc/shells` and switches your login shell (needs sudo).
+- **`claude`** links `CLAUDE.md`, `settings.json`, `guides`, `mods`, and `skills` into `~/.claude`, `skills` into `~/.agents/skills`, and each `hooks/*.sh` into `~/.claude/hooks`. A real directory already at a link destination is moved to `<name>.pre-dotfiles-bak` first.
+
+</details>
+
+### Run a subset
+
+`bootstrap.sh` passes `--ask-become-pass` and forwards its arguments to `ansible-playbook`. When you call `ansible-playbook` by hand, add the flag yourself and use a real terminal: the `packages` and `shell` roles need sudo.
 
 ```zsh
 cd ansible
@@ -69,7 +89,7 @@ ansible-playbook site.yml --tags symlinks
 ansible-playbook site.yml --tags upkeep
 ```
 
-Every role is a tag, so you can also skip one. `bootstrap.sh` forwards its arguments to `ansible-playbook`:
+Every role is a tag, so you can skip one too:
 
 ```zsh
 ./bootstrap.sh --skip-tags claude              # no access to the private submodule
@@ -77,32 +97,39 @@ Every role is a tag, so you can also skip one. `bootstrap.sh` forwards its argum
 ./bootstrap.sh --skip-tags claude,packages
 ```
 
-Skipping `packages` has side effects: the `shell` role expects Homebrew zsh and the `languages` role expects `go` from brew, so install those yourself or skip those roles too.
-
-</details>
+> [!WARNING]
+> Skipping `packages` has side effects. The `shell` role expects Homebrew zsh and the `languages` role expects `go` from brew. Install those yourself or skip those roles too.
 
 ## Packages
 
-The `packages` role installs everything below. The source of truth is `ansible/roles/packages/vars/main.yml`, so edit that file and re-run `--tags packages` rather than running `brew install` by hand.
+The source of truth is [`ansible/roles/packages/vars/main.yml`](ansible/roles/packages/vars/main.yml). Edit that file and re-run `--tags packages` instead of running `brew install` by hand.
+
+**Formulae** are command-line tools and libraries. **Casks** are macOS apps and fonts.
 
 <details>
 <summary><strong>Taps</strong></summary>
 
-`asmvik/formulae`, `anomalyco/tap`, `jithin-sabu/tap`, `stripe/stripe-cli`. Formulae from third-party taps are ignored by brew until trusted, so the role runs `brew trust` for `skhd` and `yabai`.
+<br>
+
+`asmvik/formulae`, `anomalyco/tap`, `jithin-sabu/tap`, `stripe/stripe-cli`
+
+Brew ignores formulae from third-party taps until they are trusted, so the role runs `brew trust` for `skhd` and `yabai`.
 
 </details>
 
 <details>
 <summary><strong>Formulae</strong></summary>
 
+<br>
+
 | Group | Packages |
-| --- | --- |
-| Shell and terminal | `zsh`, `bash`, `tmux`, `fzf`, `eza`, `fd`, `ripgrep`, `tree`, `wget`, `powerlevel10k`, `reattach-to-user-namespace`, `stow` |
-| Editors | `neovim`, `vim`, `tree-sitter-cli` |
-| Window management | `yabai`, `skhd` |
-| Languages and build | `go`, `python@3.14`, `llvm`, `cmake`, `cmake-docs` |
-| Dev tools | `ansible`, `gh`, `git-filter-repo`, `colima`, `railway`, `stripe`, `opencode`, `mcp-publisher`, `geckodriver` |
-| Media and AI | `ffmpeg`, `ffmpeg-full`, `whisper-cpp` |
+| :--- | :--- |
+| Shell and terminal | `zsh` `bash` `tmux` `fzf` `eza` `fd` `ripgrep` `tree` `wget` `powerlevel10k` `reattach-to-user-namespace` `stow` |
+| Editors | `neovim` `vim` `tree-sitter-cli` |
+| Window management | `yabai` `skhd` |
+| Languages and build | `go` `python@3.14` `llvm` `cmake` `cmake-docs` |
+| Dev tools | `ansible` `gh` `git-filter-repo` `colima` `railway` `stripe` `opencode` `mcp-publisher` `geckodriver` |
+| Media and AI | `ffmpeg` `ffmpeg-full` `whisper-cpp` |
 | Other | `tor` |
 
 </details>
@@ -110,14 +137,16 @@ The `packages` role installs everything below. The source of truth is `ansible/r
 <details>
 <summary><strong>Casks</strong></summary>
 
+<br>
+
 | Group | Packages |
-| --- | --- |
-| Terminals | `iterm2`, `ghostty` |
+| :--- | :--- |
+| Terminals | `iterm2` `ghostty` |
 | Editor | `visual-studio-code` |
 | Browser | `google-chrome` |
-| AI | `claude`, `chatgpt`, `codex`, `ollama-app` |
+| AI | `claude` `chatgpt` `codex` `ollama-app` |
 | Dev | `docker-desktop` |
-| Utilities | `raycast`, `monitorcontrol`, `keycastr`, `obs`, `purge` |
+| Utilities | `raycast` `monitorcontrol` `keycastr` `obs` `purge` |
 | Fonts | `font-meslo-lg-nerd-font` |
 
 </details>
@@ -126,22 +155,29 @@ The `packages` role installs everything below. The source of truth is `ansible/r
 
 ```
 .dotfiles
-├── ansible/       # provisioning playbook
-├── claude/        # submodule: private Claude Code config
-├── gitconfig/
-├── local/         # scripts → ~/.local/bin
-├── nvim/          # → ~/.config/nvim
-├── skhd/          # → ~/.config/skhd
-├── tmux/
-├── yabai/         # → ~/.config/yabai
-├── zsh/
-├── bootstrap.sh
+├── ansible/
+│   ├── roles/           # homebrew, packages, shell, languages, symlinks, claude
+│   ├── ansible.cfg
+│   ├── inventory
+│   ├── requirements.yml
+│   └── site.yml         # playbook entry point
+├── claude/              # submodule: private Claude Code config
+├── gitconfig/           # → ~/.gitconfig
+├── local/               # scripts → ~/.local/bin
+├── nvim/                # → ~/.config/nvim
+├── skhd/                # → ~/.config/skhd
+├── tmux/                # → ~/.tmux.conf
+├── yabai/               # → ~/.config/yabai
+├── zsh/                 # → ~/.zshrc, ~/.fzf.zsh, ~/.p10k.zsh
+├── bootstrap.sh         # one-command setup
 └── LICENSE
 ```
 
 ## Customize
 
-Fork it. Swap themes, plugins, shortcuts. Add formulae, casks, and taps in `ansible/roles/packages/vars/main.yml`. Drop new scripts in `local/` and add them to the script list in the `symlinks` role.
+- **Packages:** add formulae, casks, and taps in `ansible/roles/packages/vars/main.yml`.
+- **Scripts:** drop them in `local/` and add them to the script list in the `symlinks` role.
+- **Everything else:** swap themes, plugins, and shortcuts in each tool's folder.
 
 ## Contributing
 
