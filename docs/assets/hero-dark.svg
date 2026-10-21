@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#0c1512"/><stop offset="1" stop-color="#101c17"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="50%" cy="0%" r="70%">
+    <stop offset="0" stop-color="#5d9bff" stop-opacity="0.20"/>
+    <stop offset="1" stop-color="#5d9bff" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="ink" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#5d9bff"/><stop offset="1" stop-color="#8ec5ff"/>
+  </linearGradient>
+  <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#5d9bff"/><stop offset="1" stop-color="#3d86f5"/>
+  </linearGradient>
+  <filter id="shadow" x="-10%" y="-10%" width="120%" height="140%">
+    <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000" flood-opacity="0.45"/>
+  </filter>
+  
+</defs>
+<rect width="1200" height="640" rx="32" fill="url(#bg)"/>
+<rect width="1200" height="640" rx="32" fill="url(#glow)"/>
+<rect x="0.5" y="0.5" width="1199" height="639" rx="31.5" fill="none" stroke="#22302a"/>
+<text x="600" y="190" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="132" font-weight="700" letter-spacing="-5" fill="url(#ink)">.dotfiles</text>
+<text x="600" y="258" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="36" font-weight="600" letter-spacing="-0.5" fill="#eef3f0">My macOS environment as code.</text>
+<text x="600" y="302" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" fill="#aebbb4">Terminal, editor, window manager, and shell. Provisioned with one command.</text>
+<g filter="url(#shadow)"><rect x="300" y="360" width="600" height="190" rx="14" fill="#14201b"/></g>
+<path d="M300 374 a14 14 0 0 1 14 -14 h572 a14 14 0 0 1 14 14 v26 h-600 z" fill="#1b2a23"/>
+<rect x="300.5" y="360.5" width="599" height="189" rx="13.5" fill="none" stroke="#22302a"/>
+<circle cx="324" cy="380" r="6.5" fill="#ff5f57"/>
+<circle cx="346" cy="380" r="6.5" fill="#febc2e"/>
+<circle cx="368" cy="380" r="6.5" fill="#28c840"/>
+<text x="600.0" y="385" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" fill="#8a978f">~/.dotfiles</text>
+<text x="330" y="448" font-family="'SF Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="21" fill="#eef3f0"><tspan fill="#5d9bff">❯</tspan> ./bootstrap.sh</text>
+<text x="330" y="484" font-family="'SF Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#8a978f">Homebrew · Packages · Shell · Languages · Symlinks · Claude</text>
+<text x="330" y="514" font-family="'SF Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#28c840">✓ <tspan fill="#8a978f">Ready in about 15 minutes</tspan></text>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#0c1512"/><stop offset="1" stop-color="#101c17"/>
+  </linearGradient>
+  <radialGradient id="glow" cx="50%" cy="0%" r="70%">
+    <stop offset="0" stop-color="#5d9bff" stop-opacity="0.20"/>
+    <stop offset="1" stop-color="#5d9bff" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="ink" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#5d9bff"/><stop offset="1" stop-color="#8ec5ff"/>
+  </linearGradient>
+  <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#5d9bff"/><stop offset="1" stop-color="#3d86f5"/>
+  </linearGradient>
+  <filter id="shadow" x="-10%" y="-10%" width="120%" height="140%">
+    <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000" flood-opacity="0.45"/>
+  </filter>
+  
+</defs>
+<rect x="0.5" y="4.5" width="368" height="232" rx="24" fill="#14201b" stroke="#22302a"/>
+<rect x="32" y="36" width="56" height="56" rx="14" fill="url(#tile)"/>
+<text x="60" y="72" text-anchor="middle" font-family="'SF Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#ffffff">&gt;_</text>
+<text x="32" y="138" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5" fill="#eef3f0">Terminal</text>
+<text x="32" y="174" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">iTerm2, Ghostty, and tmux,</text>
+<text x="32" y="198" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">with a project switcher on ^f.</text>
+<rect x="398.5" y="4.5" width="368" height="232" rx="24" fill="#14201b" stroke="#22302a"/>
+<rect x="430" y="36" width="56" height="56" rx="14" fill="url(#tile)"/>
+<text x="458" y="72" text-anchor="middle" font-family="'SF Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#ffffff">&lt;/&gt;</text>
+<text x="430" y="138" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5" fill="#eef3f0">Editor</text>
+<text x="430" y="174" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">Neovim on lazy.nvim with LSP,</text>
+<text x="430" y="198" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">Telescope, Harpoon, and Treesitter.</text>
+<rect x="796.5" y="4.5" width="368" height="232" rx="24" fill="#14201b" stroke="#22302a"/>
+<rect x="828" y="36" width="56" height="56" rx="14" fill="url(#tile)"/>
+<text x="856" y="72" text-anchor="middle" font-family="'SF Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#ffffff">▦</text>
+<text x="828" y="138" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5" fill="#eef3f0">Windows</text>
+<text x="828" y="174" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">yabai tiling and skhd hotkeys,</text>
+<text x="828" y="198" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">all driven from the option key.</text>
+<rect x="0.5" y="266.5" width="368" height="232" rx="24" fill="#14201b" stroke="#22302a"/>
+<rect x="32" y="298" width="56" height="56" rx="14" fill="url(#tile)"/>
+<text x="60" y="334" text-anchor="middle" font-family="'SF Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#ffffff">$</text>
+<text x="32" y="400" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5" fill="#eef3f0">Shell</text>
+<text x="32" y="436" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">zsh with oh-my-zsh, fzf, and eza,</text>
+<text x="32" y="460" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">plus autosuggestions and highlighting.</text>
+<rect x="398.5" y="266.5" width="368" height="232" rx="24" fill="#14201b" stroke="#22302a"/>
+<rect x="430" y="298" width="56" height="56" rx="14" fill="url(#tile)"/>
+<text x="458" y="334" text-anchor="middle" font-family="'SF Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#ffffff">◉</text>
+<text x="430" y="400" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5" fill="#eef3f0">Apps</text>
+<text x="430" y="436" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">Raycast, Chrome, VS Code, Docker,</text>
+<text x="430" y="460" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">OBS, and more from brew casks.</text>
+<rect x="796.5" y="266.5" width="368" height="232" rx="24" fill="#14201b" stroke="#22302a"/>
+<rect x="828" y="298" width="56" height="56" rx="14" fill="url(#tile)"/>
+<text x="856" y="334" text-anchor="middle" font-family="'SF Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" font-weight="700" fill="#ffffff">{ }</text>
+<text x="828" y="400" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5" fill="#eef3f0">Languages</text>
+<text x="828" y="436" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">node, bun, rust, python, and go,</text>
+<text x="828" y="460" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" fill="#aebbb4">built natively for Apple Silicon.</text>
+</svg>

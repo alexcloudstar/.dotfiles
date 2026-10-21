@@ -1,26 +1,35 @@
 <div align="center">
 
-# .dotfiles
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/hero-dark.svg">
+  <img alt=".dotfiles: my macOS environment as code" src="docs/assets/hero-light.svg" width="100%">
+</picture>
 
-**My macOS environment as code.**
-Terminal, editor, window manager, and shell, provisioned with one command.
+<br>
 
-[![macOS](https://img.shields.io/badge/macOS-Apple_Silicon-000000?style=for-the-badge&logo=apple&logoColor=white)](https://www.apple.com/macos/)
-[![Zsh](https://img.shields.io/badge/shell-zsh-89e051?style=for-the-badge&logo=gnubash&logoColor=white)](https://www.zsh.org/)
-[![Neovim](https://img.shields.io/badge/editor-neovim-57A143?style=for-the-badge&logo=neovim&logoColor=white)](https://neovim.io/)
-[![Ansible](https://img.shields.io/badge/provisioner-ansible-EE0000?style=for-the-badge&logo=ansible&logoColor=white)](https://www.ansible.com/)
-[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](#license)
+[![macOS](https://img.shields.io/badge/macOS-Apple_Silicon-0c1512?style=flat-square&logo=apple&logoColor=white)](https://www.apple.com/macos/)
+[![Ansible](https://img.shields.io/badge/provisioned_with-Ansible-0c1512?style=flat-square&logo=ansible&logoColor=white)](https://www.ansible.com/)
+[![Neovim](https://img.shields.io/badge/editor-Neovim-0c1512?style=flat-square&logo=neovim&logoColor=white)](https://neovim.io/)
+[![Zsh](https://img.shields.io/badge/shell-zsh-0c1512?style=flat-square&logo=gnubash&logoColor=white)](https://www.zsh.org/)
+[![License](https://img.shields.io/badge/license-MIT-0c1512?style=flat-square)](#license)
 
-[Quick start](#quick-start) ·
-[What's inside](#whats-inside) ·
-[Provisioning](#provisioning) ·
-[Packages](#packages) ·
-[Structure](#folder-structure) ·
+<br>
+
+[Quick start](#quick-start) &nbsp;·&nbsp;
+[What's inside](#whats-inside) &nbsp;·&nbsp;
+[Provisioning](#provisioning) &nbsp;·&nbsp;
+[Packages](#packages) &nbsp;·&nbsp;
+[Structure](#folder-structure) &nbsp;·&nbsp;
 [Customize](#customize)
 
 </div>
 
----
+<br>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/features-dark.svg">
+  <img alt="Terminal, editor, windows, shell, apps, and languages" src="docs/assets/features-light.svg" width="100%">
+</picture>
 
 ## Quick start
 
@@ -53,7 +62,17 @@ cd ~/.dotfiles
 
 ## Provisioning
 
-`bootstrap.sh` installs Xcode CLT, Homebrew, and Ansible, then runs `ansible/site.yml`. Six roles run in this order:
+`bootstrap.sh` installs Xcode CLT, Homebrew, and Ansible, then runs `ansible/site.yml`. Six roles run in this order. Every role is idempotent, so re-run any time to reconverge.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/flow-dark.svg">
+  <img alt="Roles in order: homebrew, packages, shell, languages, symlinks, claude" src="docs/assets/flow-light.svg" width="100%">
+</picture>
+
+<details>
+<summary><strong>Role details</strong></summary>
+
+<br>
 
 | # | Role | What it does |
 | :-: | :--- | :--- |
@@ -64,15 +83,11 @@ cd ~/.dotfiles
 | 5 | `symlinks` | Links configs into `~/.config`, `~/.local/bin`, and `~` directly (no `stow`) |
 | 6 | `claude` | Links `claude/` into `~/.claude` and `~/.agents/skills` |
 
-Every role is idempotent. Re-run any time to reconverge.
-
-<details>
-<summary><strong>Role details</strong></summary>
-
 - **`packages`**
   - Creates `/usr/local/cli-plugins` (needs sudo) so the Docker Desktop cask can link its plugins.
   - Leaves apps already in `/Applications` alone. To hand one to brew, trash it and run `brew install --cask <name>`.
   - The `upkeep` tag (`brew upgrade` + `brew cleanup`) never runs by default.
+  - Python comes from the `python@3.14` formula. `.zshrc` puts its unversioned `python` and `pip` first on `PATH` and aliases `python` to `python3`. There is no pyenv, uv, or pipx.
 - **`shell`** adds Homebrew zsh to `/etc/shells` and switches your login shell (needs sudo).
 - **`claude`** links `CLAUDE.md`, `settings.json`, `guides`, `mods`, and `skills` into `~/.claude`, `skills` into `~/.agents/skills`, and each `hooks/*.sh` into `~/.claude/hooks`. A real directory already at a link destination is moved to `<name>.pre-dotfiles-bak` first.
 
@@ -186,3 +201,9 @@ Issues and PRs welcome.
 ## License
 
 [MIT](LICENSE)
+
+<br>
+
+<div align="center">
+<sub>Built for Apple Silicon. Provisioned with Ansible.</sub>
+</div>
