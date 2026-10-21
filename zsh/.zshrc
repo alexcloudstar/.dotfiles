@@ -71,6 +71,7 @@ alias ls="eza --icons=always"
 alias vim="nvim"
 
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="/opt/homebrew/opt/python@3.14/libexec/bin:$PATH"
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/stefanalexandruromila/.docker/completions $fpath)

@@ -29,7 +29,7 @@ homebrew_formulae:
   - mcp-publisher
   - neovim
   - powerlevel10k
-  - python
+  - python@3.14
   - railway
   - reattach-to-user-namespace
   - ripgrep
