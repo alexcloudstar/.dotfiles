@@ -31,6 +31,13 @@
   check_mode: false
   loop: "{{ claude_dir_link_dests }}"
 
+- name: Collect real directories blocking Claude Code symlinks
+  ansible.builtin.set_fact:
+    claude_blocked_dests: >-
+      {{ claude_dir_link_stats.results
+         | selectattr('stat.exists') | selectattr('stat.isdir') | rejectattr('stat.islnk')
+         | map(attribute='item') | list }}
+
 - name: Move aside real directories blocking Claude Code symlinks
   ansible.builtin.command:
     argv:
@@ -49,10 +56,10 @@
     dest: "{{ ansible_facts['env']['HOME'] }}/{{ item.dest }}"
     state: link
     force: true
+  when: not (ansible_check_mode and (ansible_facts['env']['HOME'] ~ '/' ~ item.dest) in claude_blocked_dests)
   loop:
     - { src: "CLAUDE.md", dest: ".claude/CLAUDE.md" }
     - { src: "settings.json", dest: ".claude/settings.json" }
-    - { src: "plugins/installed_plugins.json", dest: ".claude/plugins/installed_plugins.json" }
     - { src: "guides", dest: ".claude/guides" }
     - { src: "mods", dest: ".claude/mods" }
     - { src: "skills", dest: ".claude/skills" }
