@@ -14,14 +14,14 @@
     repo: https://github.com/zsh-users/zsh-autosuggestions
     dest: "{{ ansible_facts['env']['HOME'] }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
     depth: 1
-    update: false
+    update: true
 
 - name: Install zsh-syntax-highlighting
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting
     dest: "{{ ansible_facts['env']['HOME'] }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
     depth: 1
-    update: false
+    update: true
 
 - name: Ensure Homebrew zsh is a valid login shell
   ansible.builtin.lineinfile:

@@ -1,5 +1,5 @@
 ---
-nvm_version: "v0.40.1"
+nvm_version: "v0.40.8"
 node_version: "lts/*"
 rustup_toolchain: "stable"
 rust_native_toolchain: "{{ rustup_toolchain }}-aarch64-apple-darwin"

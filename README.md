@@ -51,7 +51,7 @@ cd ~/.dotfiles
 > **Read before you run it.** The playbook changes your machine:
 > - Replaces `~/.zshrc`, `~/.gitconfig`, `~/.tmux.conf`, and the other linked configs with symlinks. Existing files are overwritten with no backup. `gitconfig/.gitconfig` contains my name and email, so change it first.
 > - Sets Homebrew zsh as your login shell.
-> - Installs about 35 formulae and 15 casks from [`packages/vars/main.yml`](ansible/roles/packages/vars/main.yml).
+> - Installs 32 formulae and 14 casks from [`packages/vars/main.yml`](ansible/roles/packages/vars/main.yml).
 >
 > To preview without changing anything: `cd ansible && ansible-playbook site.yml --check --diff --ask-become-pass`.
 
@@ -82,7 +82,7 @@ cd ~/.dotfiles && ./bootstrap.sh
 | Tool | What it is | Lives in | Linked to |
 | :--- | :--- | :--- | :--- |
 | [**Neovim**](https://neovim.io) | Lua config, plugins via lazy.nvim | `nvim/` | `~/.config/nvim` |
-| [**Zsh**](https://www.zsh.org) | oh-my-zsh, fzf, eza | `zsh/` | `~/.zshrc`, `~/.fzf.zsh`, `~/.p10k.zsh` |
+| [**Zsh**](https://www.zsh.org) | oh-my-zsh, fzf, eza | `zsh/` | `~/.zshrc`, `~/.fzf.zsh` |
 | [**tmux**](https://github.com/tmux/tmux) | Terminal multiplexer | `tmux/` | `~/.tmux.conf` |
 | [**yabai**](https://github.com/asmvik/yabai) | Tiling window manager | `yabai/` | `~/.config/yabai` |
 | [**skhd**](https://github.com/asmvik/skhd) | Hotkey daemon for yabai | `skhd/` | `~/.config/skhd` |
@@ -153,7 +153,7 @@ Everything below is installed by the playbook. Package lists live in [`ansible/r
 
 | Language | Version | Installed by | Notes |
 | :--- | :--- | :--- | :--- |
-| **Node.js** | latest LTS (`lts/*`) | [nvm](https://github.com/nvm-sh/nvm) `v0.40.1` | Lives in `~/.nvm`. Global npm packages: `vercel` |
+| **Node.js** | latest LTS (`lts/*`) | [nvm](https://github.com/nvm-sh/nvm) `v0.40.8` | Lives in `~/.nvm`. Global npm packages: `vercel` |
 | **Bun** | latest at install time | the official `bun.sh` installer | Lives in `~/.bun` |
 | **Rust** | `stable`, `aarch64-apple-darwin` | [rustup](https://rustup.rs) | An x86_64 rustup or toolchain is replaced with a native one |
 | **Go** | current Homebrew release | `brew install go` | Tools below are added with `go install` |
@@ -211,8 +211,6 @@ Command-line tools and libraries.
 | | `ripgrep` | Faster `grep` |
 | | `tree` | Directory tree view |
 | | `wget` | File downloader |
-| | `powerlevel10k` | Prompt theme, config in `~/.p10k.zsh` |
-| | `reattach-to-user-namespace` | Clipboard access inside tmux |
 | | `stow` | Symlink manager, installed but not used by the playbook |
 | **Editors** | `neovim` | Main editor |
 | | `vim` | Fallback editor |
@@ -232,8 +230,8 @@ Command-line tools and libraries.
 | | `opencode` | AI coding agent for the terminal |
 | | `mcp-publisher` | Publishes MCP servers to the registry |
 | | `geckodriver` | WebDriver for Firefox |
-| **Media and AI** | `ffmpeg`, `ffmpeg-full` | Video and audio processing |
-| | `whisper-cpp` | Local speech-to-text |
+| **Media and AI** | `ffmpeg-full` | Video and audio processing |
+| | `whisper.cpp` | Local speech-to-text |
 | **Other** | `tor` | Tor daemon |
 
 ### Casks
@@ -243,7 +241,6 @@ macOS apps and fonts.
 | Group | Package | What it is |
 | :--- | :--- | :--- |
 | **Terminals** | `iterm2` | Terminal emulator |
-| | `ghostty` | GPU-accelerated terminal |
 | **Editor** | `visual-studio-code` | GUI editor, `code` is linked into `PATH` |
 | **Browser** | `google-chrome` | Browser |
 | **AI** | `claude` | Claude desktop app |
@@ -275,7 +272,7 @@ macOS apps and fonts.
 ├── skhd/                # → ~/.config/skhd
 ├── tmux/                # → ~/.tmux.conf
 ├── yabai/               # → ~/.config/yabai
-├── zsh/                 # → ~/.zshrc, ~/.fzf.zsh, ~/.p10k.zsh
+├── zsh/                 # → ~/.zshrc, ~/.fzf.zsh
 ├── bootstrap.sh         # one-command setup
 └── LICENSE
 ```

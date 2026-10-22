@@ -28,7 +28,6 @@
     - { src: "tmux/.tmux.conf", dest: ".tmux.conf" }
     - { src: "zsh/.zshrc", dest: ".zshrc" }
     - { src: "zsh/.fzf.zsh", dest: ".fzf.zsh" }
-    - { src: "zsh/.p10k.zsh", dest: ".p10k.zsh" }
 
 # skhd and yabai keep their configs under a nested .config/<app>/ path, so the
 # link source is not just the top-level package dir the way it is for nvim.

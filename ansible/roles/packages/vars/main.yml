@@ -18,7 +18,6 @@ homebrew_formulae:
   - colima
   - eza
   - fd
-  - ffmpeg
   - ffmpeg-full
   - fzf
   - geckodriver
@@ -28,10 +27,8 @@ homebrew_formulae:
   - llvm
   - mcp-publisher
   - neovim
-  - powerlevel10k
   - python@3.14
   - railway
-  - reattach-to-user-namespace
   - ripgrep
   - tmux
   - tor
@@ -39,7 +36,7 @@ homebrew_formulae:
   - tree-sitter-cli
   - vim
   - wget
-  - whisper-cpp
+  - whisper.cpp
   - asmvik/formulae/skhd
   - asmvik/formulae/yabai
   - anomalyco/tap/opencode
@@ -52,7 +49,6 @@ homebrew_casks:
   - codex
   - docker-desktop
   - font-meslo-lg-nerd-font
-  - ghostty
   - google-chrome
   - iterm2
   - keycastr
