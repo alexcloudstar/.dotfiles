@@ -1,6 +1,12 @@
 local LUA_TEST_GLOBALS = { "vim", "it", "describe", "before_each", "after_each" }
 local CLANGD_FALLBACK_FLAGS = { "-std=c++20" }
 local CLANGD_ROOT_MARKERS = { "compile_commands.json", ".git" }
+local TAILWIND_FILETYPES = {
+    "html", "css", "scss", "less",
+    "javascript", "javascriptreact", "typescript", "typescriptreact",
+    "astro", "vue", "svelte", "markdown",
+}
+local GOPLS_FILETYPES = { "go", "gomod", "gowork" }
 
 return {
     "neovim/nvim-lspconfig",
@@ -48,6 +54,9 @@ return {
                 fallbackFlags = CLANGD_FALLBACK_FLAGS,
             },
         })
+
+        vim.lsp.config('tailwindcss', { filetypes = TAILWIND_FILETYPES })
+        vim.lsp.config('gopls', { filetypes = GOPLS_FILETYPES })
 
         require("fidget").setup({})
         require("mason").setup()

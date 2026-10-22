@@ -56,6 +56,7 @@ alias ls="eza --icons=always"
 alias vim="nvim"
 
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="/opt/homebrew/opt/ffmpeg-full/bin:$PATH"
 export PATH="/opt/homebrew/opt/python@3.14/libexec/bin:$PATH"
 
 export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
