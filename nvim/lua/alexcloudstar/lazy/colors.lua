@@ -1,49 +1,41 @@
-function ColorMyPencils(color)
-	color = color or "tokyonight"
-	vim.cmd.colorscheme(color)
+local DEFAULT_COLORSCHEME = "tokyonight"
 
-	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+local applyColorscheme = function(colorscheme)
+    vim.cmd.colorscheme(colorscheme or DEFAULT_COLORSCHEME)
 
+    vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
 
 return {
     {
         "folke/tokyonight.nvim",
-        name = 'tokyonight',
+        name = "tokyonight",
+        lazy = false,
+        priority = 1000,
         config = function()
             require("tokyonight").setup({
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                style = "storm", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
-                transparent = true, -- Enable this to disable setting the background color
-                terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+                style = "storm",
+                transparent = true,
+                terminal_colors = true,
                 styles = {
-                    -- Style to be applied to different syntax groups
-                    -- Value is any valid attr-list value for `:help nvim_set_hl`
                     comments = { italic = false },
                     keywords = { italic = false },
-                    -- Background styles. Can be "dark", "transparent" or "normal"
-                    sidebars = "dark", -- style for sidebars, see below
-                    floats = "dark", -- style for floating windows
+                    sidebars = "dark",
+                    floats = "dark",
                 },
             })
+
+            applyColorscheme()
         end
     },
     {
         "catppuccin/nvim",
         name = "catppuccin",
-        config = function()
-            require('catppuccin').setup({
-                flavour = "mocha",
-                transparent_background = false, -- disables setting the background color.
-            })
-
-            vim.cmd("colorscheme tokyonight")
-
-            ColorMyPencils()
-        end
+        lazy = true,
+        opts = {
+            flavour = "mocha",
+            transparent_background = false,
+        },
     },
-
-
 }
