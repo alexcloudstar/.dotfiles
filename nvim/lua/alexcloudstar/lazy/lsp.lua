@@ -1,8 +1,12 @@
+local LUA_TEST_GLOBALS = { "vim", "it", "describe", "before_each", "after_each" }
+local CLANGD_FALLBACK_FLAGS = { "-std=c++20" }
+local CLANGD_ROOT_MARKERS = { "compile_commands.json", ".git" }
+
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason.nvim",
+        "mason-org/mason-lspconfig.nvim",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
@@ -13,8 +17,6 @@ return {
         "j-hui/fidget.nvim",
     },
 
-    vim.keymap.set('n', '<space>vd', vim.diagnostic.open_float);
-
     config = function()
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
@@ -23,6 +25,29 @@ return {
             {},
             vim.lsp.protocol.make_client_capabilities(),
             cmp_lsp.default_capabilities())
+
+        vim.keymap.set('n', '<space>vd', vim.diagnostic.open_float)
+
+        vim.lsp.config('*', { capabilities = capabilities })
+
+        vim.lsp.config('lua_ls', {
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = LUA_TEST_GLOBALS,
+                    },
+                },
+            },
+        })
+
+        vim.lsp.config('clangd', {
+            cmd = { "clangd" },
+            filetypes = { "c", "cpp", "objc", "objcpp" },
+            root_markers = CLANGD_ROOT_MARKERS,
+            init_options = {
+                fallbackFlags = CLANGD_FALLBACK_FLAGS,
+            },
+        })
 
         require("fidget").setup({})
         require("mason").setup()
@@ -36,45 +61,6 @@ return {
                 "gopls",
                 "clangd",
             },
-            handlers = {
-                function(server_name) -- default handler (optional)
-
-                    require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
-                    }
-                end,
-
-                ["lua_ls"] = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.lua_ls.setup {
-                        capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = { "vim", "it", "describe", "before_each", "after_each" },
-                                }
-                            }
-                        }
-                    }
-                end,
-
-                ["clangd"] = function()
-                    require("lspconfig").clangd.setup {
-                        capabilities = capabilities,
-                        cmd = { "clangd" }, -- Ensure clangd is in PATH
-                        filetypes = { "c", "cpp", "objc", "objcpp" },
-                        root_dir = require("lspconfig.util").root_pattern(
-                            "compile_commands.json",
-                            ".git"
-                        ) or vim.fn.getcwd(),
-                        settings = {
-                            clangd = {
-                                fallbackFlags = { "-std=c++20" }, -- Customize flags if needed
-                            },
-                        },
-                    }
-                end,
-            }
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -82,7 +68,7 @@ return {
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                    require('luasnip').lsp_expand(args.body)
                 end,
             },
             mapping = cmp.mapping.preset.insert({
@@ -93,44 +79,40 @@ return {
             }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
-                { name = 'luasnip' }, -- For luasnip users.
+                { name = 'luasnip' },
             }, {
                 { name = 'buffer' },
             })
         })
 
         vim.diagnostic.config({
-            -- update_in_insert = true,
             float = {
                 focusable = false,
                 style = "minimal",
                 border = "rounded",
-                source = "always",
+                source = true,
                 header = "",
                 prefix = "",
             },
         })
-    end;
 
-    vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-        callback = function(ev)
-            -- Enable completion triggered by <c-x><c-o>
-            vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+        vim.api.nvim_create_autocmd('LspAttach', {
+            group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+            callback = function(ev)
+                vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-            -- Buffer local mappings.
-            -- See `:help vim.lsp.*` for documentation on any of the below functions
-            local opts = { buffer = ev.buf }
-            vim.keymap.set("n", "gd", vim.lsp.buf.definition , opts)
-            vim.keymap.set("n", "K",  vim.lsp.buf.hover , opts)
-            vim.keymap.set("n", "<leader>vws",  vim.lsp.buf.workspace_symbol , opts)
-            vim.keymap.set("n", "<leader>vd",  vim.diagnostic.open_float , opts)
-            vim.keymap.set("n", "[d",  vim.diagnostic.goto_next , opts)
-            vim.keymap.set("n", "]d",  vim.diagnostic.goto_prev , opts)
-            vim.keymap.set("n", "<leader>vca",  vim.lsp.buf.code_action , opts)
-            vim.keymap.set("n", "<leader>vrr",  vim.lsp.buf.references , opts)
-            vim.keymap.set("n", "<leader>vrn",  vim.lsp.buf.rename , opts)
-            vim.keymap.set("i", "<C-h>",  vim.lsp.buf.signature_help , opts)
-        end,
-    })
+                local opts = { buffer = ev.buf }
+                vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+                vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+                vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
+                vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
+                vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
+                vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
+                vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
+                vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
+                vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
+                vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+            end,
+        })
+    end,
 }
