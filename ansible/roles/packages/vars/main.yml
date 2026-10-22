@@ -25,6 +25,7 @@ homebrew_formulae:
   - git-filter-repo
   - go
   - llvm
+  - luarocks
   - mcp-publisher
   - neovim
   - python@3.14

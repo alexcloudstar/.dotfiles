@@ -51,7 +51,7 @@ cd ~/.dotfiles
 > **Read before you run it.** The playbook changes your machine:
 > - Replaces `~/.zshrc`, `~/.gitconfig`, `~/.tmux.conf`, and the other linked configs with symlinks. Existing files are overwritten with no backup. `gitconfig/.gitconfig` contains my name and email, so change it first.
 > - Sets Homebrew zsh as your login shell.
-> - Installs 32 formulae and 14 casks from [`packages/vars/main.yml`](ansible/roles/packages/vars/main.yml).
+> - Installs 33 formulae and 14 casks from [`packages/vars/main.yml`](ansible/roles/packages/vars/main.yml).
 >
 > To preview without changing anything: `cd ansible && ansible-playbook site.yml --check --diff --ask-become-pass`.
 
@@ -220,6 +220,7 @@ Command-line tools and libraries.
 | **Languages and build** | `go` | Go toolchain |
 | | `python@3.14` | Python 3.14 |
 | | `llvm` | Clang, LLD, and friends |
+| | `luarocks` | Lua package manager, used by mason.nvim |
 | | `cmake`, `cmake-docs` | Build system and its docs |
 | **Dev tools** | `ansible` | Runs this playbook |
 | | `gh` | GitHub CLI |
