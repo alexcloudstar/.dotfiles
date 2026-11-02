@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Re-sign skhd with a stable identity so the macOS accessibility grant
+# survives `brew upgrade skhd`. Run after every skhd upgrade.
+set -euo pipefail
+
+IDENTITY="${SKHD_SIGN_IDENTITY:-$(security find-identity -v -p codesigning | awk -F'"' '/Apple Development/ {print $2; exit}')}"
+[ -n "$IDENTITY" ] || { echo "no codesigning identity found" >&2; exit 1; }
+
+BIN="$(readlink -f "$(command -v skhd)")"
+codesign --force --sign "$IDENTITY" --identifier com.koekeishiya.skhd "$BIN"
+codesign -d -r- "$BIN" 2>&1 | tail -1
+skhd --restart-service
